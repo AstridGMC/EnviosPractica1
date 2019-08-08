@@ -3,19 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package enviospractica1.UI;
+package enviospractica1.UI.recepcionista;
+
+import javax.swing.ImageIcon;
 
 /**
  *
  * @author astridmc
  */
-public class RecepcionoistaInterface extends javax.swing.JInternalFrame {
+public class RecepcionistaInterface extends javax.swing.JInternalFrame {
 
+    RegistroCliente registrarCliente = new RegistroCliente();
+    RegistroEnvio nuevoEnvio= new RegistroEnvio();
     /**
      * Creates new form RecepcionoistaInterface
      */
-    public RecepcionoistaInterface() {
+    public RecepcionistaInterface() {
         initComponents();
+        Diseño();
     }
 
     /**
@@ -29,12 +34,14 @@ public class RecepcionoistaInterface extends javax.swing.JInternalFrame {
 
         jInternalFrame1 = new javax.swing.JInternalFrame();
         jPanel1 = new javax.swing.JPanel();
-        jDesktopPane1 = new javax.swing.JDesktopPane();
+        jDesktopUsuarios = new javax.swing.JDesktopPane();
         barraMenu = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        btnAgregarCliente = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        btnRegistrarEnvio = new javax.swing.JMenuItem();
+        btnRastrear = new javax.swing.JMenuItem();
 
         jInternalFrame1.setVisible(true);
 
@@ -49,19 +56,22 @@ public class RecepcionoistaInterface extends javax.swing.JInternalFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
+        setClosable(true);
+        setIconifiable(true);
+
         jPanel1.setBackground(new java.awt.Color(123, 223, 169));
 
-        jDesktopPane1.setBackground(javax.swing.UIManager.getDefaults().getColor("FormattedTextField.selectionForeground"));
+        jDesktopUsuarios.setBackground(new java.awt.Color(0, 201, 178));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
+            .addComponent(jDesktopUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, 755, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE)
+            .addComponent(jDesktopUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
         );
 
         barraMenu.setBackground(new java.awt.Color(1, 1, 1));
@@ -71,11 +81,16 @@ public class RecepcionoistaInterface extends javax.swing.JInternalFrame {
         jMenu1.setActionCommand("CLIENTE");
         jMenu1.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
 
-        jMenuItem2.setBackground(new java.awt.Color(1, 1, 1));
-        jMenuItem2.setForeground(new java.awt.Color(254, 254, 254));
-        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/enviospractica1/UI/Imagenes/nuevoUsuario.png"))); // NOI18N
-        jMenuItem2.setText("Agregar Nuevo Cliente");
-        jMenu1.add(jMenuItem2);
+        btnAgregarCliente.setBackground(new java.awt.Color(1, 1, 1));
+        btnAgregarCliente.setForeground(new java.awt.Color(254, 254, 254));
+        btnAgregarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/enviospractica1/UI/Imagenes/nuevoUsuario.png"))); // NOI18N
+        btnAgregarCliente.setText("Agregar Nuevo Cliente");
+        btnAgregarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarClienteActionPerformed(evt);
+            }
+        });
+        jMenu1.add(btnAgregarCliente);
 
         jMenuItem3.setBackground(new java.awt.Color(1, 1, 1));
         jMenuItem3.setForeground(new java.awt.Color(254, 254, 254));
@@ -89,6 +104,29 @@ public class RecepcionoistaInterface extends javax.swing.JInternalFrame {
         jMenu2.setForeground(new java.awt.Color(254, 254, 254));
         jMenu2.setText("ENVIOS");
         jMenu2.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
+
+        btnRegistrarEnvio.setBackground(new java.awt.Color(1, 1, 1));
+        btnRegistrarEnvio.setForeground(new java.awt.Color(254, 254, 254));
+        btnRegistrarEnvio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/enviospractica1/UI/Imagenes/agregaEnvio.png"))); // NOI18N
+        btnRegistrarEnvio.setText("Registrar nuevo Envio");
+        btnRegistrarEnvio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarEnvioActionPerformed(evt);
+            }
+        });
+        jMenu2.add(btnRegistrarEnvio);
+
+        btnRastrear.setBackground(new java.awt.Color(1, 1, 1));
+        btnRastrear.setForeground(new java.awt.Color(254, 254, 254));
+        btnRastrear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/enviospractica1/UI/Imagenes/localizar.png"))); // NOI18N
+        btnRastrear.setText("Rastrear Envio");
+        btnRastrear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRastrearActionPerformed(evt);
+            }
+        });
+        jMenu2.add(btnRastrear);
+
         barraMenu.add(jMenu2);
 
         setJMenuBar(barraMenu);
@@ -107,14 +145,36 @@ public class RecepcionoistaInterface extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnRastrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRastrearActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRastrearActionPerformed
 
+    private void btnAgregarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarClienteActionPerformed
+        registrarCliente.setVisible(true);
+        jDesktopUsuarios.add(registrarCliente);
+    }//GEN-LAST:event_btnAgregarClienteActionPerformed
+
+    private void btnRegistrarEnvioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarEnvioActionPerformed
+        nuevoEnvio.setVisible(true);
+        jDesktopUsuarios.add(nuevoEnvio);
+    }//GEN-LAST:event_btnRegistrarEnvioActionPerformed
+
+    public void Diseño(){
+        this.setClosable(true);
+        this.setResizable(true);
+        this.setIconifiable(true);
+        this.setTitle("Recepcionista");
+        
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar barraMenu;
-    private javax.swing.JDesktopPane jDesktopPane1;
+    private javax.swing.JMenuItem btnAgregarCliente;
+    private javax.swing.JMenuItem btnRastrear;
+    private javax.swing.JMenuItem btnRegistrarEnvio;
+    private javax.swing.JDesktopPane jDesktopUsuarios;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables

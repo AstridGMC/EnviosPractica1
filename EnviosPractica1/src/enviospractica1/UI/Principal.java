@@ -5,6 +5,7 @@
  */
 package enviospractica1.UI;
 
+import enviospractica1.UI.recepcionista.RecepcionistaInterface;
 import javax.swing.ImageIcon;
 
 /**
@@ -13,12 +14,13 @@ import javax.swing.ImageIcon;
  */
 public class Principal extends javax.swing.JFrame {
 
+    RecepcionistaInterface recepcionista = new RecepcionistaInterface();
     /**
      * Creates new form Principal
      */
     public Principal() {
         initComponents();
-        this.setLocation(400,100);
+        Diseño();
     }
 
     /**
@@ -31,40 +33,42 @@ public class Principal extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenuItem1 = new javax.swing.JMenuItem();
-        jDesktopPane1 = new javax.swing.JDesktopPane();
+        jDesktopUsuarios = new javax.swing.JDesktopPane();
         jPanel1 = new javax.swing.JPanel();
         lblImagen = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         barraMenu = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        btnRecepcionista = new javax.swing.JMenuItem();
+        btnAdministrador = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jDesktopPane1.setBackground(new java.awt.Color(197, 238, 214));
-        jDesktopPane1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 201, 178), 5, true));
+        jDesktopUsuarios.setBackground(new java.awt.Color(197, 238, 214));
+        jDesktopUsuarios.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 201, 178), 5, true));
 
         jPanel1.setBackground(new java.awt.Color(254, 254, 254));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 201, 178), 7));
 
-        lblImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/enviospractica1/UI/Imagenes/Logo (2).png"))); // NOI18N
+        lblImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/enviospractica1/UI/Imagenes/LogoPrincipal.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(103, 103, 103)
-                .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 489, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(97, 97, 97)
+                .addComponent(lblImagen, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
+                .addGap(105, 105, 105))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblImagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 145, Short.MAX_VALUE)
+                .addGap(3, 3, 3))
         );
 
         barraMenu.setBackground(new java.awt.Color(1, 1, 1));
@@ -74,9 +78,31 @@ public class Principal extends javax.swing.JFrame {
         jMenu1.setActionCommand("CLIENTE");
         jMenu1.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
 
+        btnRecepcionista.setBackground(new java.awt.Color(1, 1, 1));
+        btnRecepcionista.setForeground(new java.awt.Color(254, 254, 254));
+        btnRecepcionista.setIcon(new javax.swing.ImageIcon(getClass().getResource("/enviospractica1/UI/Imagenes/recepcionista.png"))); // NOI18N
+        btnRecepcionista.setText("RECEPCIONISTA");
+        btnRecepcionista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRecepcionistaActionPerformed(evt);
+            }
+        });
+        jMenu1.add(btnRecepcionista);
+
+        btnAdministrador.setBackground(new java.awt.Color(1, 1, 1));
+        btnAdministrador.setForeground(new java.awt.Color(254, 254, 254));
+        btnAdministrador.setIcon(new javax.swing.ImageIcon(getClass().getResource("/enviospractica1/UI/Imagenes/Administrador.png"))); // NOI18N
+        btnAdministrador.setText("ADMINISTRADOR");
+        btnAdministrador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdministradorActionPerformed(evt);
+            }
+        });
+        jMenu1.add(btnAdministrador);
+
         jMenuItem4.setBackground(new java.awt.Color(1, 1, 1));
         jMenuItem4.setForeground(new java.awt.Color(254, 254, 254));
-        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/enviospractica1/UI/Imagenes/clientes.png"))); // NOI18N
+        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/enviospractica1/UI/Imagenes/operador.png"))); // NOI18N
         jMenuItem4.setText("OPERADOR");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -84,28 +110,6 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem4);
-
-        jMenuItem5.setBackground(new java.awt.Color(1, 1, 1));
-        jMenuItem5.setForeground(new java.awt.Color(254, 254, 254));
-        jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/enviospractica1/UI/Imagenes/clientes.png"))); // NOI18N
-        jMenuItem5.setText("ADMINISTRADOR");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem5);
-
-        jMenuItem3.setBackground(new java.awt.Color(1, 1, 1));
-        jMenuItem3.setForeground(new java.awt.Color(254, 254, 254));
-        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/enviospractica1/UI/Imagenes/clientes.png"))); // NOI18N
-        jMenuItem3.setText("RECEPCIONISTA");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem3);
 
         barraMenu.add(jMenu1);
 
@@ -116,8 +120,8 @@ public class Principal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 747, Short.MAX_VALUE)
             .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jDesktopUsuarios)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -126,41 +130,45 @@ public class Principal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 542, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 12, Short.MAX_VALUE))
+                .addComponent(jDesktopUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 574, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    private void btnRecepcionistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecepcionistaActionPerformed
+        recepcionista.setVisible(true);
+        jDesktopUsuarios.add(recepcionista);
+    }//GEN-LAST:event_btnRecepcionistaActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+    private void btnAdministradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministradorActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
+    }//GEN-LAST:event_btnAdministradorActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar barraMenu;
-    private javax.swing.JDesktopPane jDesktopPane1;
+    private javax.swing.JMenuItem btnAdministrador;
+    private javax.swing.JMenuItem btnRecepcionista;
+    private javax.swing.JDesktopPane jDesktopUsuarios;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblImagen;
     // End of variables declaration//GEN-END:variables
 
     private void Diseño(){
-        
+        setTitle("EMPRESA DE ENVIOS");
+        setLocation(400,0);
+        ImageIcon portada = new ImageIcon("2.png");
+        this.setIconImage(new ImageIcon("2.png").getImage());
     }
 
 }
