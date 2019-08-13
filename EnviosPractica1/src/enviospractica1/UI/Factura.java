@@ -187,7 +187,7 @@ public class Factura extends javax.swing.JDialog {
                 {null, null, null, null}
             },
             new String [] {
-                "Descripcion Paquete", "Peso Kg.", "Destino", "Precio"
+                "Descripcion Paquete", "No.Guia", "Destino", "Precio"
             }
         ) {
             Class[] types = new Class [] {
@@ -201,8 +201,8 @@ public class Factura extends javax.swing.JDialog {
         detalleEnvioTable.setOpaque(false);
         jScrollPane1.setViewportView(detalleEnvioTable);
         if (detalleEnvioTable.getColumnModel().getColumnCount() > 0) {
-            detalleEnvioTable.getColumnModel().getColumn(1).setMinWidth(87);
-            detalleEnvioTable.getColumnModel().getColumn(1).setMaxWidth(87);
+            detalleEnvioTable.getColumnModel().getColumn(1).setMinWidth(105);
+            detalleEnvioTable.getColumnModel().getColumn(1).setMaxWidth(105);
             detalleEnvioTable.getColumnModel().getColumn(3).setMinWidth(87);
             detalleEnvioTable.getColumnModel().getColumn(3).setMaxWidth(87);
         }

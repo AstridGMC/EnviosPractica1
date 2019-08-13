@@ -4,9 +4,23 @@ package enviospractica1.Backend;
 
 public class Paquete {
     private int peso;
-    private String Destino;
+    private Destino destino;
     private boolean prioridad;
     private Cliente remitente;
+    private String estado;
+    private int NumeroGuia;
+    private int prioridadPrecio;
+
+    public Paquete(int peso, Destino destino, boolean prioridad, Cliente remitente, String estado, int NumeroGuia) {
+        this.peso = peso;
+        this.destino = destino;
+        this.prioridad = prioridad;
+        this.remitente = remitente;
+        this.estado = estado;
+        this.NumeroGuia = NumeroGuia;
+    }
+    
+    
 
     public int getPeso() {
         return peso;
@@ -16,12 +30,12 @@ public class Paquete {
         this.peso = peso;
     }
 
-    public String getDestino() {
-        return Destino;
+    public Destino getDestino() {
+        return destino;
     }
 
-    public void setDestino(String Destino) {
-        this.Destino = Destino;
+    public void setDestino(Destino Destino) {
+        this.destino = Destino;
     }
 
     public boolean isPrioridad() {
@@ -38,6 +52,30 @@ public class Paquete {
 
     public void setRemitente(Cliente remitente) {
         this.remitente = remitente;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public int getNumeroGuia() {
+        return NumeroGuia;
+    }
+
+    public void setNumeroGuia(int NumeroGuia) {
+        this.NumeroGuia = NumeroGuia;
+    }
+
+    public int getPrioridadPrecio() {
+        return prioridadPrecio;
+    }
+
+    public void setPrioridadPrecio(int prioridadPrecio) {
+        this.prioridadPrecio = prioridadPrecio;
     }
     
     

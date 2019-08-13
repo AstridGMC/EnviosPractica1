@@ -42,7 +42,6 @@ public class RegistroCliente extends javax.swing.JInternalFrame {
         lblNombre = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
         lblApellido = new javax.swing.JLabel();
-        txtApellido = new javax.swing.JTextField();
         txtCUI = new javax.swing.JTextField();
         lblCUI = new javax.swing.JLabel();
         LblTitulo = new javax.swing.JLabel();
@@ -57,7 +56,6 @@ public class RegistroCliente extends javax.swing.JInternalFrame {
         lblCelular = new javax.swing.JLabel();
         txtNIT = new javax.swing.JTextField();
         lblCelular1 = new javax.swing.JLabel();
-        lblCelular2 = new javax.swing.JLabel();
         txtApellido2 = new javax.swing.JTextField();
 
         jPanel1.setBackground(new java.awt.Color(139, 249, 187));
@@ -103,14 +101,6 @@ public class RegistroCliente extends javax.swing.JInternalFrame {
         lblApellido.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         lblApellido.setForeground(new java.awt.Color(30, 65, 32));
         lblApellido.setText("Ingrese Apellidos :");
-
-        txtApellido.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
-        txtApellido.setForeground(new java.awt.Color(13, 58, 12));
-        txtApellido.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtApellidoActionPerformed(evt);
-            }
-        });
 
         txtCUI.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
         txtCUI.setForeground(new java.awt.Color(13, 58, 12));
@@ -227,10 +217,6 @@ public class RegistroCliente extends javax.swing.JInternalFrame {
         lblCelular1.setForeground(new java.awt.Color(30, 65, 32));
         lblCelular1.setText("Ingrese Numero de NIT:");
 
-        lblCelular2.setFont(new java.awt.Font("Dialog", 1, 20)); // NOI18N
-        lblCelular2.setForeground(new java.awt.Color(30, 65, 32));
-        lblCelular2.setText("Ingrese Direccion:");
-
         txtApellido2.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
         txtApellido2.setForeground(new java.awt.Color(13, 58, 12));
         txtApellido2.addActionListener(new java.awt.event.ActionListener() {
@@ -248,7 +234,7 @@ public class RegistroCliente extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(lblFechaNacimiento)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(66, 69, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
@@ -277,21 +263,15 @@ public class RegistroCliente extends javax.swing.JInternalFrame {
                             .addComponent(lblCUI)
                             .addComponent(lblCelular1)
                             .addComponent(lblNombre)
-                            .addComponent(lblCelular, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblCelular2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblCelular, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtCUI, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtNIT, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtApellido2, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(58, 58, 58))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(37, 37, 37))))))
+                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCUI, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNIT, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtApellido2, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(58, 58, 58))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -321,11 +301,7 @@ public class RegistroCliente extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNIT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblCelular1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblCelular2)
-                    .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(64, 64, 64)
                 .addComponent(lblFechaNacimiento)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -350,7 +326,7 @@ public class RegistroCliente extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 515, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 521, Short.MAX_VALUE)
                 .addGap(2, 2, 2))
         );
 
@@ -360,10 +336,6 @@ public class RegistroCliente extends javax.swing.JInternalFrame {
     private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreActionPerformed
-
-    private void txtApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApellidoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtApellidoActionPerformed
 
     private void txtCUIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCUIActionPerformed
         // TODO add your handling code here:
@@ -393,13 +365,13 @@ public class RegistroCliente extends javax.swing.JInternalFrame {
     private void txtCelularKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCelularKeyTyped
         char a = evt.getKeyChar();
         if(a<'0'||a>'9') evt.consume();
-        if(txtAño.getText().length()==8) evt.consume();
+        if( txtCelular.getText().length()==8) evt.consume();
     }//GEN-LAST:event_txtCelularKeyTyped
 
     private void txtCUIKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCUIKeyTyped
         char b = evt.getKeyChar();
         if(b<'0'||b>'9') evt.consume();
-        if(txtAño.getText().length()==13) evt.consume();
+        if(txtCUI.getText().length()==13) evt.consume();
     }//GEN-LAST:event_txtCUIKeyTyped
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
@@ -466,11 +438,11 @@ public class RegistroCliente extends javax.swing.JInternalFrame {
     private void validar(){
         verificador =0;
         
-        apellido = txtApellido.getText();
+//        apellido = txtApellido.getText();
         if(verificador==0){
             validarCUI();
             if(verificador ==2){
-                validarCamposVacios();
+//                validarCamposVacios();
                 if(verificador ==2){
                     if(verificador==2){
                         if(!txtAño.getText().isEmpty()){
@@ -513,7 +485,7 @@ public class RegistroCliente extends javax.swing.JInternalFrame {
         }
     }
         
-    
+    /*
        public void validarCamposVacios(){
         if(txtNombre.getText().isEmpty()){
             verificador =1;
@@ -548,7 +520,7 @@ public class RegistroCliente extends javax.swing.JInternalFrame {
             }
         }
     }
-    
+    */
     String cui;
      private void validarCUI(){
         try{
@@ -619,7 +591,7 @@ public class RegistroCliente extends javax.swing.JInternalFrame {
         txtMes.setText("");
         txtAño.setText("");
         txtCelular.setText("");
-        txtApellido.setText("");
+//        txtApellido.setText("");
         txtNombre.setText("");
         txtCUI.setText("");
     }
@@ -635,10 +607,8 @@ public class RegistroCliente extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblCUI;
     private javax.swing.JLabel lblCelular;
     private javax.swing.JLabel lblCelular1;
-    private javax.swing.JLabel lblCelular2;
     private javax.swing.JLabel lblFechaNacimiento;
     private javax.swing.JLabel lblNombre;
-    private javax.swing.JTextField txtApellido;
     private javax.swing.JTextField txtApellido1;
     private javax.swing.JTextField txtApellido2;
     private javax.swing.JTextField txtAño;

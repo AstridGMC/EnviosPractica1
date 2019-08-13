@@ -7,6 +7,7 @@ public class Cliente {
     private String CUI;
     private LocalDate fechaNacimiento;
     private String Telefono;
+    private String NIT;
 
     public String getNombre() {
         return nombre;
@@ -38,6 +39,14 @@ public class Cliente {
 
     public void setTelefono(String Telefono) {
         this.Telefono = Telefono;
+    }
+
+    public String getNIT() {
+        return NIT;
+    }
+
+    public void setNIT(String NIT) {
+        this.NIT = NIT;
     }
     
     

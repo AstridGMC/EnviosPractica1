@@ -10,7 +10,7 @@ package enviospractica1.UI.operador;
  * @author astridmc
  */
 public class OperadorInterface extends javax.swing.JInternalFrame {
-
+    ProcesarPaquete procesarPaquete = new ProcesarPaquete();
     /**
      * Creates new form RegistradorHoras
      */
@@ -87,7 +87,7 @@ public class OperadorInterface extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopOperador, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 744, Short.MAX_VALUE)
+            .addComponent(jDesktopOperador, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 752, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -98,7 +98,8 @@ public class OperadorInterface extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnrRegistroHoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnrRegistroHoraActionPerformed
-       
+        procesarPaquete.setVisible(true);
+        jDesktopOperador.add(procesarPaquete);
     }//GEN-LAST:event_btnrRegistroHoraActionPerformed
 
     private void btnRegistrarEnvioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarEnvioActionPerformed

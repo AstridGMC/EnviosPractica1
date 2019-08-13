@@ -67,11 +67,11 @@ public class RecepcionistaInterface extends javax.swing.JInternalFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, 755, Short.MAX_VALUE)
+            .addComponent(jDesktopUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, 759, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
+            .addComponent(jDesktopUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, 556, Short.MAX_VALUE)
         );
 
         barraMenu.setBackground(new java.awt.Color(1, 1, 1));

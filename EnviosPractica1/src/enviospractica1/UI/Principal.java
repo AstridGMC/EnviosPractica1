@@ -5,6 +5,8 @@
  */
 package enviospractica1.UI;
 
+import enviospractica1.UI.Administrador.AdministradorInterface;
+import enviospractica1.UI.operador.OperadorInterface;
 import enviospractica1.UI.recepcionista.RecepcionistaInterface;
 import javax.swing.ImageIcon;
 
@@ -14,7 +16,9 @@ import javax.swing.ImageIcon;
  */
 public class Principal extends javax.swing.JFrame {
 
-    RecepcionistaInterface recepcionista = new RecepcionistaInterface();
+    RecepcionistaInterface recepcionistaInterface = new RecepcionistaInterface();
+    OperadorInterface operadorInterface = new OperadorInterface();
+    AdministradorInterface AdministradorInterface = new AdministradorInterface();
     /**
      * Creates new form Principal
      */
@@ -41,7 +45,7 @@ public class Principal extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         btnRecepcionista = new javax.swing.JMenuItem();
         btnAdministrador = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        btnOPerador = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -100,16 +104,16 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu1.add(btnAdministrador);
 
-        jMenuItem4.setBackground(new java.awt.Color(1, 1, 1));
-        jMenuItem4.setForeground(new java.awt.Color(254, 254, 254));
-        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/enviospractica1/UI/Imagenes/operador.png"))); // NOI18N
-        jMenuItem4.setText("OPERADOR");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        btnOPerador.setBackground(new java.awt.Color(1, 1, 1));
+        btnOPerador.setForeground(new java.awt.Color(254, 254, 254));
+        btnOPerador.setIcon(new javax.swing.ImageIcon(getClass().getResource("/enviospractica1/UI/Imagenes/operador.png"))); // NOI18N
+        btnOPerador.setText("OPERADOR");
+        btnOPerador.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+                btnOPeradorActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem4);
+        jMenu1.add(btnOPerador);
 
         barraMenu.add(jMenu1);
 
@@ -138,27 +142,29 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRecepcionistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecepcionistaActionPerformed
-        recepcionista.setVisible(true);
-        jDesktopUsuarios.add(recepcionista);
+        recepcionistaInterface.setVisible(true);
+        jDesktopUsuarios.add(recepcionistaInterface);
     }//GEN-LAST:event_btnRecepcionistaActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+    private void btnOPeradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOPeradorActionPerformed
+        operadorInterface.setVisible(true);
+        jDesktopUsuarios.add(operadorInterface);
+    }//GEN-LAST:event_btnOPeradorActionPerformed
 
     private void btnAdministradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministradorActionPerformed
-        // TODO add your handling code here:
+        AdministradorInterface.setVisible(true);
+        jDesktopUsuarios.add(AdministradorInterface);
     }//GEN-LAST:event_btnAdministradorActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar barraMenu;
     private javax.swing.JMenuItem btnAdministrador;
+    private javax.swing.JMenuItem btnOPerador;
     private javax.swing.JMenuItem btnRecepcionista;
     private javax.swing.JDesktopPane jDesktopUsuarios;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblImagen;
