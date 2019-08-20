@@ -302,7 +302,13 @@ public class ProcesarPaquete extends javax.swing.JInternalFrame {
         if(txtNoGuia.getText().length()!=12){
             JOptionPane.showMessageDialog(null,"El Numero de Guia requiere 12 digitos");
         }else if(txtNoGuia.getText().length()==12){
-            this.setVisible(false);
+            if(txtNoHoras.getText().isEmpty()){
+                JOptionPane.showMessageDialog(null,"No ha especificado las horas");
+            }else{
+                JOptionPane.showMessageDialog(null,"El paquete se ha procesado con exito");
+                this.setVisible(false);
+            }
+            
         }
     }
 

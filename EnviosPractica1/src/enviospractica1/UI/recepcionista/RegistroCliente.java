@@ -56,7 +56,7 @@ public class RegistroCliente extends javax.swing.JInternalFrame {
         lblCelular = new javax.swing.JLabel();
         txtNIT = new javax.swing.JTextField();
         lblCelular1 = new javax.swing.JLabel();
-        txtApellido2 = new javax.swing.JTextField();
+        txtApellido = new javax.swing.JTextField();
 
         jPanel1.setBackground(new java.awt.Color(139, 249, 187));
 
@@ -217,11 +217,11 @@ public class RegistroCliente extends javax.swing.JInternalFrame {
         lblCelular1.setForeground(new java.awt.Color(30, 65, 32));
         lblCelular1.setText("Ingrese Numero de NIT:");
 
-        txtApellido2.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
-        txtApellido2.setForeground(new java.awt.Color(13, 58, 12));
-        txtApellido2.addActionListener(new java.awt.event.ActionListener() {
+        txtApellido.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
+        txtApellido.setForeground(new java.awt.Color(13, 58, 12));
+        txtApellido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtApellido2ActionPerformed(evt);
+                txtApellidoActionPerformed(evt);
             }
         });
 
@@ -235,12 +235,15 @@ public class RegistroCliente extends javax.swing.JInternalFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(lblFechaNacimiento)
                         .addGap(66, 69, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(lblApellido)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(125, 125, 125)
                                 .addComponent(LblTitulo))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -253,24 +256,20 @@ public class RegistroCliente extends javax.swing.JInternalFrame {
                                         .addGap(18, 18, 18)
                                         .addComponent(jLabel5)
                                         .addGap(27, 27, 27)
-                                        .addComponent(txtDia, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(58, 58, 58))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(lblApellido)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblCUI)
-                            .addComponent(lblCelular1)
-                            .addComponent(lblNombre)
-                            .addComponent(lblCelular, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCUI, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNIT, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtApellido2, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(txtDia, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblCUI)
+                                    .addComponent(lblCelular1)
+                                    .addComponent(lblNombre)
+                                    .addComponent(lblCelular, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtCUI, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtNIT, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(58, 58, 58))))
         );
         jPanel2Layout.setVerticalGroup(
@@ -288,7 +287,7 @@ public class RegistroCliente extends javax.swing.JInternalFrame {
                         .addComponent(lblApellido)
                         .addGap(23, 23, 23))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(txtApellido2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtCUI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -326,7 +325,7 @@ public class RegistroCliente extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 521, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 527, Short.MAX_VALUE)
                 .addGap(2, 2, 2))
         );
 
@@ -424,9 +423,9 @@ public class RegistroCliente extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtApellido1ActionPerformed
 
-    private void txtApellido2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApellido2ActionPerformed
+    private void txtApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApellidoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtApellido2ActionPerformed
+    }//GEN-LAST:event_txtApellidoActionPerformed
 
     public void Diseño() {
         this.setClosable(true);
@@ -438,11 +437,11 @@ public class RegistroCliente extends javax.swing.JInternalFrame {
     private void validar(){
         verificador =0;
         
-//        apellido = txtApellido.getText();
+        apellido = txtApellido.getText();
         if(verificador==0){
             validarCUI();
             if(verificador ==2){
-//                validarCamposVacios();
+                validarCamposVacios();
                 if(verificador ==2){
                     if(verificador==2){
                         if(!txtAño.getText().isEmpty()){
@@ -485,8 +484,8 @@ public class RegistroCliente extends javax.swing.JInternalFrame {
         }
     }
         
-    /*
-       public void validarCamposVacios(){
+   
+    public void validarCamposVacios(){
         if(txtNombre.getText().isEmpty()){
             verificador =1;
             JOptionPane.showMessageDialog(null,"Nombre requerido");
@@ -520,7 +519,7 @@ public class RegistroCliente extends javax.swing.JInternalFrame {
             }
         }
     }
-    */
+    
     String cui;
      private void validarCUI(){
         try{
@@ -609,8 +608,8 @@ public class RegistroCliente extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblCelular1;
     private javax.swing.JLabel lblFechaNacimiento;
     private javax.swing.JLabel lblNombre;
+    private javax.swing.JTextField txtApellido;
     private javax.swing.JTextField txtApellido1;
-    private javax.swing.JTextField txtApellido2;
     private javax.swing.JTextField txtAño;
     private javax.swing.JTextField txtCUI;
     private javax.swing.JTextField txtCelular;

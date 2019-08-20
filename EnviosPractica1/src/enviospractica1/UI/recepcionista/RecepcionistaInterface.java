@@ -5,7 +5,14 @@
  */
 package enviospractica1.UI.recepcionista;
 
+import com.mysql.jdbc.Connection;
+import enviospractica1.ConectorMySQL;
+import java.awt.HeadlessException;
+import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -13,6 +20,10 @@ import javax.swing.ImageIcon;
  */
 public class RecepcionistaInterface extends javax.swing.JInternalFrame {
 
+    
+    private String usuario ;
+    private String password;
+    
     RegistroCliente registrarCliente = new RegistroCliente();
     RegistroEnvio nuevoEnvio= new RegistroEnvio();
     /**
@@ -159,6 +170,61 @@ public class RecepcionistaInterface extends javax.swing.JInternalFrame {
         jDesktopUsuarios.add(nuevoEnvio);
     }//GEN-LAST:event_btnRegistrarEnvioActionPerformed
 
+      public void obtenerDatos(String usuario, String password){
+          this.usuario = usuario;
+          this.password = password;
+        conector = new ConectorMySQL(usuario,password ); 
+    }
+    ConectorMySQL conector; 
+    
+      
+     public  boolean ValidarUsuario( Connection conexion )  throws IOException {
+        try{
+            
+            Statement instruccionSQL2 = conexion.createStatement();
+            ResultSet resultadosConsulta = instruccionSQL2.executeQuery ("SELECT * FROM Usuario WHERE nombreUsuario ='"+usuario+"' AND passwordUser='"+password+"'");
+ 
+            if( resultadosConsulta.first()){   
+                System.out.println("correcto");
+                return true;        //usuario validado correctamente
+            }else  if(!resultadosConsulta.first()){
+                System.out.println("incorrecto" + usuario + password);
+                
+                return false;        //usuario validado incorrectamente
+            }else{
+                return false;
+            }
+        } catch (Exception e){
+            System.out.println("ddddddddddd incorrecto" + usuario + password);
+            e.printStackTrace();
+            return false;
+        }
+ 
+    }
+
+    public int reconocerUsuario() throws IOException{
+        int validacionRango = conector.ValidarRango( conector.getConexion());
+        if(conector != null){
+            if(validacionRango==1){
+                System.out.println(1);
+                return 1;
+            } else if (validacionRango==2){
+                System.out.println(2);
+                return 2;
+            } else if(validacionRango==3){
+                System.out.println(3);
+                return 3;
+            }else{
+                System.out.println("nada encontrado");
+                return 0;
+            }
+        }else{
+                System.out.println("no encontrado");
+                return 0;
+            }
+    }
+    
+    
     public void Diseño(){
         this.setClosable(true);
         this.setResizable(true);

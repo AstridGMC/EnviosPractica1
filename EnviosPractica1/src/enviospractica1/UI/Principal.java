@@ -8,7 +8,11 @@ package enviospractica1.UI;
 import enviospractica1.UI.Administrador.AdministradorInterface;
 import enviospractica1.UI.operador.OperadorInterface;
 import enviospractica1.UI.recepcionista.RecepcionistaInterface;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,9 +20,11 @@ import javax.swing.ImageIcon;
  */
 public class Principal extends javax.swing.JFrame {
 
+    IngresarUsuario acceder = new IngresarUsuario(this);
     RecepcionistaInterface recepcionistaInterface = new RecepcionistaInterface();
     OperadorInterface operadorInterface = new OperadorInterface();
     AdministradorInterface AdministradorInterface = new AdministradorInterface();
+
     /**
      * Creates new form Principal
      */
@@ -65,7 +71,7 @@ public class Principal extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(97, 97, 97)
-                .addComponent(lblImagen, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
+                .addComponent(lblImagen, javax.swing.GroupLayout.DEFAULT_SIZE, 555, Short.MAX_VALUE)
                 .addGap(105, 105, 105))
         );
         jPanel1Layout.setVerticalGroup(
@@ -134,29 +140,68 @@ public class Principal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jDesktopUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 574, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jDesktopUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 574, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRecepcionistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecepcionistaActionPerformed
-        recepcionistaInterface.setVisible(true);
-        jDesktopUsuarios.add(recepcionistaInterface);
+        acceder.setVisible(true);
+        int reconocedor;
+            try {
+                reconocedor = acceder.reconocerUsuario();
+                if(!acceder.isVisible()){
+                    if(acceder.reconocerUsuario()==3){
+                        recepcionistaInterface.setVisible(true);
+                        jDesktopUsuarios.add(recepcionistaInterface);
+                    }else if(acceder.reconocerUsuario()!=3){
+                        JOptionPane.showMessageDialog(null,"El usuario no tiene permitido el acceso a Recepcionista");
+                    }
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
     }//GEN-LAST:event_btnRecepcionistaActionPerformed
 
     private void btnOPeradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOPeradorActionPerformed
-        operadorInterface.setVisible(true);
-        jDesktopUsuarios.add(operadorInterface);
+        acceder.setVisible(true);
+        int reconocedor;
+        try {
+            reconocedor = acceder.reconocerUsuario();
+            if(!acceder.isVisible()){
+                if(reconocedor==2){
+                    operadorInterface.setVisible(true);
+                    jDesktopUsuarios.add(operadorInterface);
+                }else if(acceder.reconocerUsuario()!=2){
+                    JOptionPane.showMessageDialog(null,"El usuario no tiene permitido el acceso a Recepcionista");
+                } 
+             }
+        } catch (IOException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
     }//GEN-LAST:event_btnOPeradorActionPerformed
 
     private void btnAdministradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministradorActionPerformed
-        AdministradorInterface.setVisible(true);
-        jDesktopUsuarios.add(AdministradorInterface);
+        acceder.setVisible(true);
+        if(!acceder.isVisible()){
+            try {
+                if(acceder.reconocerUsuario()==1){
+                    AdministradorInterface.setVisible(true);
+                    jDesktopUsuarios.add(AdministradorInterface);
+                }else if(acceder.reconocerUsuario()!=1){
+                    JOptionPane.showMessageDialog(null,"El usuario no tiene permitido el acceso a Administrador");
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_btnAdministradorActionPerformed
 
-
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar barraMenu;
     private javax.swing.JMenuItem btnAdministrador;

@@ -11,13 +11,15 @@ package enviospractica1.UI.Administrador;
  */
 public class AdministradorInterface extends javax.swing.JInternalFrame {
 
+    private int reconocedor = 0;
     /**
      * Creates new form AdministradorInterface
      */
     NuevoUsuario registrarUsuario = new NuevoUsuario();
+    DesactivaUsuario desactivaUsuario  = new DesactivaUsuario();
+    Reportes reporte;
     public AdministradorInterface() {
         initComponents();
-        jDesktopUsuarios.add(registrarUsuario);
     }
 
     /**
@@ -35,13 +37,13 @@ public class AdministradorInterface extends javax.swing.JInternalFrame {
         btnAgregarUsuario = new javax.swing.JMenuItem();
         btnActivarDesactivar = new javax.swing.JMenuItem();
         btnRutas = new javax.swing.JMenu();
-        btnRegistrarEnvio = new javax.swing.JMenuItem();
+        btnCrearRuta = new javax.swing.JMenuItem();
         btnAgregarPuntoControl = new javax.swing.JMenuItem();
         btnINformacion = new javax.swing.JMenu();
         btnReporteRutas = new javax.swing.JMenuItem();
-        btnGanancias1 = new javax.swing.JMenuItem();
         btnGanancias = new javax.swing.JMenuItem();
-        btnGanancias2 = new javax.swing.JMenuItem();
+        btnClientes = new javax.swing.JMenuItem();
+        btnRutasPopulares = new javax.swing.JMenuItem();
 
         jDesktopUsuarios.setBackground(new java.awt.Color(0, 201, 178));
 
@@ -66,7 +68,12 @@ public class AdministradorInterface extends javax.swing.JInternalFrame {
         btnActivarDesactivar.setBackground(new java.awt.Color(1, 1, 1));
         btnActivarDesactivar.setForeground(new java.awt.Color(254, 254, 254));
         btnActivarDesactivar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/enviospractica1/UI/Imagenes/userConfiguration .png"))); // NOI18N
-        btnActivarDesactivar.setText("Activar y Desactivar");
+        btnActivarDesactivar.setText(" Desactivar");
+        btnActivarDesactivar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActivarDesactivarActionPerformed(evt);
+            }
+        });
         btnUsuarios.add(btnActivarDesactivar);
 
         barraMenu.add(btnUsuarios);
@@ -76,16 +83,16 @@ public class AdministradorInterface extends javax.swing.JInternalFrame {
         btnRutas.setText("RUTAS");
         btnRutas.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
 
-        btnRegistrarEnvio.setBackground(new java.awt.Color(1, 1, 1));
-        btnRegistrarEnvio.setForeground(new java.awt.Color(254, 254, 254));
-        btnRegistrarEnvio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/enviospractica1/UI/Imagenes/nuevaRuta.png"))); // NOI18N
-        btnRegistrarEnvio.setText("Crear  Ruta");
-        btnRegistrarEnvio.addActionListener(new java.awt.event.ActionListener() {
+        btnCrearRuta.setBackground(new java.awt.Color(1, 1, 1));
+        btnCrearRuta.setForeground(new java.awt.Color(254, 254, 254));
+        btnCrearRuta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/enviospractica1/UI/Imagenes/nuevaRuta.png"))); // NOI18N
+        btnCrearRuta.setText("Crear  Ruta");
+        btnCrearRuta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegistrarEnvioActionPerformed(evt);
+                btnCrearRutaActionPerformed(evt);
             }
         });
-        btnRutas.add(btnRegistrarEnvio);
+        btnRutas.add(btnCrearRuta);
 
         btnAgregarPuntoControl.setBackground(new java.awt.Color(1, 1, 1));
         btnAgregarPuntoControl.setForeground(new java.awt.Color(254, 254, 254));
@@ -116,21 +123,10 @@ public class AdministradorInterface extends javax.swing.JInternalFrame {
         });
         btnINformacion.add(btnReporteRutas);
 
-        btnGanancias1.setBackground(new java.awt.Color(1, 1, 1));
-        btnGanancias1.setForeground(new java.awt.Color(254, 254, 254));
-        btnGanancias1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/enviospractica1/UI/Imagenes/reporteGanancias.png"))); // NOI18N
-        btnGanancias1.setText("Reporte de Ganancias");
-        btnGanancias1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGanancias1ActionPerformed(evt);
-            }
-        });
-        btnINformacion.add(btnGanancias1);
-
         btnGanancias.setBackground(new java.awt.Color(1, 1, 1));
         btnGanancias.setForeground(new java.awt.Color(254, 254, 254));
-        btnGanancias.setIcon(new javax.swing.ImageIcon(getClass().getResource("/enviospractica1/UI/Imagenes/clientesPrincipal.png"))); // NOI18N
-        btnGanancias.setText("Reporte de Clientes");
+        btnGanancias.setIcon(new javax.swing.ImageIcon(getClass().getResource("/enviospractica1/UI/Imagenes/reporteGanancias.png"))); // NOI18N
+        btnGanancias.setText("Reporte de Ganancias");
         btnGanancias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGananciasActionPerformed(evt);
@@ -138,16 +134,27 @@ public class AdministradorInterface extends javax.swing.JInternalFrame {
         });
         btnINformacion.add(btnGanancias);
 
-        btnGanancias2.setBackground(new java.awt.Color(1, 1, 1));
-        btnGanancias2.setForeground(new java.awt.Color(254, 254, 254));
-        btnGanancias2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/enviospractica1/UI/Imagenes/RutasPopulares.png"))); // NOI18N
-        btnGanancias2.setText("Rutas  Populares");
-        btnGanancias2.addActionListener(new java.awt.event.ActionListener() {
+        btnClientes.setBackground(new java.awt.Color(1, 1, 1));
+        btnClientes.setForeground(new java.awt.Color(254, 254, 254));
+        btnClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/enviospractica1/UI/Imagenes/clientesPrincipal.png"))); // NOI18N
+        btnClientes.setText("Reporte de Clientes");
+        btnClientes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGanancias2ActionPerformed(evt);
+                btnClientesActionPerformed(evt);
             }
         });
-        btnINformacion.add(btnGanancias2);
+        btnINformacion.add(btnClientes);
+
+        btnRutasPopulares.setBackground(new java.awt.Color(1, 1, 1));
+        btnRutasPopulares.setForeground(new java.awt.Color(254, 254, 254));
+        btnRutasPopulares.setIcon(new javax.swing.ImageIcon(getClass().getResource("/enviospractica1/UI/Imagenes/RutasPopulares.png"))); // NOI18N
+        btnRutasPopulares.setText("Rutas  Populares");
+        btnRutasPopulares.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRutasPopularesActionPerformed(evt);
+            }
+        });
+        btnINformacion.add(btnRutasPopulares);
 
         barraMenu.add(btnINformacion);
 
@@ -168,34 +175,50 @@ public class AdministradorInterface extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarUsuarioActionPerformed
-        
-        
         registrarUsuario.setVisible(true);
+        jDesktopUsuarios.add(registrarUsuario);
     }//GEN-LAST:event_btnAgregarUsuarioActionPerformed
 
-    private void btnRegistrarEnvioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarEnvioActionPerformed
+    private void btnCrearRutaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearRutaActionPerformed
        
-    }//GEN-LAST:event_btnRegistrarEnvioActionPerformed
+    }//GEN-LAST:event_btnCrearRutaActionPerformed
 
     private void btnAgregarPuntoControlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarPuntoControlActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAgregarPuntoControlActionPerformed
 
     private void btnReporteRutasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteRutasActionPerformed
-        // TODO add your handling code here:
+        reconocedor = 1;
+        reporte = new Reportes(reconocedor);
+        reporte.setVisible(true);
+        jDesktopUsuarios.add(reporte);
     }//GEN-LAST:event_btnReporteRutasActionPerformed
 
+    private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
+        reconocedor =2;
+        reporte = new Reportes(reconocedor);
+        reporte.setVisible(true);
+        jDesktopUsuarios.add(reporte);
+    }//GEN-LAST:event_btnClientesActionPerformed
+
     private void btnGananciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGananciasActionPerformed
-        // TODO add your handling code here:
+        reconocedor =3;
+        reporte = new Reportes(reconocedor);
+        reporte.setVisible(true);
+        jDesktopUsuarios.add(reporte);
     }//GEN-LAST:event_btnGananciasActionPerformed
 
-    private void btnGanancias1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGanancias1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnGanancias1ActionPerformed
+    private void btnRutasPopularesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRutasPopularesActionPerformed
+        reconocedor =24;
+        reporte = new Reportes(reconocedor);
+        reporte.setVisible(true);
+        jDesktopUsuarios.add(reporte);
+    }//GEN-LAST:event_btnRutasPopularesActionPerformed
 
-    private void btnGanancias2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGanancias2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnGanancias2ActionPerformed
+    private void btnActivarDesactivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActivarDesactivarActionPerformed
+        desactivaUsuario.setVisible(true);
+        jDesktopUsuarios.add(desactivaUsuario);
+    }//GEN-LAST:event_btnActivarDesactivarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -203,13 +226,13 @@ public class AdministradorInterface extends javax.swing.JInternalFrame {
     private javax.swing.JMenuItem btnActivarDesactivar;
     private javax.swing.JMenuItem btnAgregarPuntoControl;
     private javax.swing.JMenuItem btnAgregarUsuario;
+    private javax.swing.JMenuItem btnClientes;
+    private javax.swing.JMenuItem btnCrearRuta;
     private javax.swing.JMenuItem btnGanancias;
-    private javax.swing.JMenuItem btnGanancias1;
-    private javax.swing.JMenuItem btnGanancias2;
     private javax.swing.JMenu btnINformacion;
-    private javax.swing.JMenuItem btnRegistrarEnvio;
     private javax.swing.JMenuItem btnReporteRutas;
     private javax.swing.JMenu btnRutas;
+    private javax.swing.JMenuItem btnRutasPopulares;
     private javax.swing.JMenu btnUsuarios;
     private javax.swing.JDesktopPane jDesktopUsuarios;
     // End of variables declaration//GEN-END:variables
