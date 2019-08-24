@@ -5,13 +5,11 @@
  */
 package enviospractica1.UI.Administrador;
 
-import com.mysql.jdbc.Connection;
 import enviospractica1.ConectorMySQL;
 import enviospractica1.UI.IngresarUsuario;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -190,7 +188,7 @@ public class DesactivaUsuario extends javax.swing.JInternalFrame {
             .addGroup(panelFondoLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addComponent(LblTitulo3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                 .addGroup(panelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCU)
                     .addComponent(txtCUI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -219,7 +217,7 @@ public class DesactivaUsuario extends javax.swing.JInternalFrame {
     private void btnEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEstadoActionPerformed
         validarCUI();
         if (verificador == 2) {
-            if("Desactivar".equals(btnEstado.getText())){
+            if("DESACTIVAR".equals(btnEstado.getText())){
                 System.out.println("DESACTIVAR");
                 this.setVisible(false);
                 DesactivarUsuario(IngresarUsuario.conector);
@@ -280,7 +278,7 @@ public class DesactivaUsuario extends javax.swing.JInternalFrame {
                 return true;        //usuario validado correctamente
             } else if (!resultadosConsulta.first()) {
                 System.out.println("incorrecto");
-                JOptionPane.showMessageDialog(null, "el usuario no existe o se encuentra inactivo");
+                JOptionPane.showMessageDialog(null, "el usuario no existe en la base de datos");
 
                 return false;        //usuario validado incorrectamente
             } else {
@@ -301,6 +299,7 @@ public class DesactivaUsuario extends javax.swing.JInternalFrame {
             instruccionSQL2.executeUpdate("UPDATE enviosPractica.Usuario SET estado ='" + Estado() + "' WHERE cuiOperador = '" + CUI + "';");
             instruccionSQL2.execute("REVOKE '"+rango +"' FROM '" +nombre +"';");
             instruccionSQL2.execute( "GRANT '"+rango+"' TO '"+nombre+ "';");
+            JOptionPane.showMessageDialog(null,"El usuario se Ha DESACTIVADO con exito");
             VaciarCampos();
         } catch (SQLException e) {
             System.out.println(" incorrecto no existe en base de datos");
@@ -315,6 +314,7 @@ public class DesactivaUsuario extends javax.swing.JInternalFrame {
             instruccionSQL3.executeUpdate("UPDATE enviosPractica.Usuario SET estado ='" + Estado() + "' WHERE cuiOperador = '" + CUI + "';");
             instruccionSQL3.execute( "GRANT '"+rango+"' TO '"+nombre+ "';");
             instruccionSQL3.execute("SET DEFAULT ROLE ALL TO '" +nombre+"'@'%';");
+            JOptionPane.showMessageDialog(null,"El usuario se Ha ACTIVADO con exito");
             VaciarCampos();
         } catch (SQLException e) {
             System.out.println(" incorrecto no existe en base de datos");
@@ -345,7 +345,7 @@ public class DesactivaUsuario extends javax.swing.JInternalFrame {
 
         }
     }
-    
+    //reconoce la accion del boton activar/desactivar
     private String Estado(){
         if("Activo".equals(estado)){
             btnEstado.setText("DESACTIVAR");

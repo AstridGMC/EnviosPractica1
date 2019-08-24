@@ -7,7 +7,7 @@ package enviospractica1.UI;
 
 import com.mysql.jdbc.Connection;
 import enviospractica1.ConectorMySQL;
-import java.awt.HeadlessException;
+import java.lang.NullPointerException;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -67,7 +67,7 @@ public class IngresarUsuario extends javax.swing.JDialog {
 
         LblTitulo.setFont(new java.awt.Font("Abyssinica SIL", 1, 28)); // NOI18N
         LblTitulo.setForeground(new java.awt.Color(254, 254, 254));
-        LblTitulo.setText("Ingrese su cxontraseña:");
+        LblTitulo.setText("Ingrese su contraseña:");
 
         txtNombreUsuario.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         txtNombreUsuario.addActionListener(new java.awt.event.ActionListener() {
@@ -186,12 +186,14 @@ public class IngresarUsuario extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         obtenerDatos();
+        
         try {
             ValidadorUsuario();
-            
         } catch (IOException ex) {
             Logger.getLogger(IngresarUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
+            
+        
     }//GEN-LAST:event_jButton1ActionPerformed
     public static ConectorMySQL conector; 
     
@@ -204,57 +206,54 @@ public class IngresarUsuario extends javax.swing.JDialog {
     
     public void ValidadorUsuario() throws IOException{
             
-                try{                    
-                    //chekar si el usuario escrbio el nombre de usuario y pw
-                    if (txtNombreUsuario.getText().length() > 0 && txtContraseña.getPassword().length > 0 ){
-                        // Si el usuario si fue validado correctamente
-                        if(ValidarUsuario(conector.getConexion())){
-                            lblImagen.setVisible(false);
-                            setVisible(false);
-                            VaciarCampos();
-                        }else {
-                            lblImagen.setVisible(true);
-                            JOptionPane.showMessageDialog(null, "El nombre de usuario y/o contrasenia no son validos.");
-                            
-                        }
-                    }
-                    else{
-                        JOptionPane.showMessageDialog(null, "Debe escribir nombre de usuario y contrasenia.\n" +
-                            "NO puede dejar ningun campo vacio");
-                        
-                    }
- 
-                } catch (HeadlessException e){
-                    System.out.println("coneccion fallida");
-                }
+        //chekar si el usuario escrbio el nombre de usuario y pw
+        if (txtNombreUsuario.getText().length() > 0 && txtContraseña.getPassword().length > 0 ){
+            // Si el usuario si fue validado correctamente
+            if(ValidarUsuario(conector.getConexion())){
+                lblImagen.setVisible(false);
+                setVisible(false);
+                VaciarCampos();
+            }else {
+                lblImagen.setVisible(true);
+                
+                
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Debe escribir nombre de usuario y contrasenia.\n" +
+                    "NO puede dejar ningun campo vacio");
+            
+        }
                  
             }
     
-     public  boolean ValidarUsuario( Connection conexion )  throws IOException {
+     public  boolean ValidarUsuario( Connection conexion ) throws NullPointerException {
         try{
-            
-            Statement instruccionSQL2 = conexion.createStatement();
-            ResultSet resultadosConsulta = instruccionSQL2.executeQuery ("SELECT * FROM Usuario WHERE nombreUsuario ='"+usuario+"' AND passwordUser='"+password+"' AND estado = 'Activo'");
- 
-            if( resultadosConsulta.first()){   
-                System.out.println("correcto");
-                return true;        //usuario validado correctamente
-            }else  if(!resultadosConsulta.first()){
-                System.out.println("incorrecto" + usuario + password);
-                
-                return false;        //usuario validado incorrectamente
-            }else{
+            if(conexion != null){
+                Statement instruccionSQL2 = conexion.createStatement();
+                ResultSet resultadosConsulta = instruccionSQL2.executeQuery ("SELECT * FROM Usuario WHERE nombreUsuario ='"+usuario+"' AND passwordUser='"+password+"' AND estado = 'Activo'");
+
+                if( resultadosConsulta.first()){   
+                    System.out.println("correcto");
+                    return true;        //usuario validado correctamente
+                }else  if(!resultadosConsulta.first()){
+                    System.out.println("incorrecto" + usuario + password);
+
+                    return false;        //usuario validado incorrectamente
+                }else{
+                    return false;
+                }
+            } else{
                 return false;
             }
-        } catch (SQLException e){
+        } catch ( SQLException e ){
             System.out.println(" incorrecto" + usuario + password+"no existe en base de datos");
-            
             return false;
         }
  
     }
 
-    public int reconocerUsuario() throws IOException{
+    public int reconocerUsuario(){
             
             if(conector != null){
                 int validacionRango = conector.ValidarRango(conector.getConexion());

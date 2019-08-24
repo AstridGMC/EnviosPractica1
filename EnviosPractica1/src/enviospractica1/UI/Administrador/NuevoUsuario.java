@@ -5,8 +5,11 @@
  */
 package enviospractica1.UI.Administrador;
 
+import enviospractica1.Backend.PuntoControl;
+import enviospractica1.Backend.Usuario;
 import enviospractica1.ConectorMySQL;
 import enviospractica1.UI.IngresarUsuario;
+import java.awt.HeadlessException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -19,6 +22,9 @@ import javax.swing.JOptionPane;
 public class NuevoUsuario extends javax.swing.JInternalFrame {
 
     IngresarUsuario usuario = new IngresarUsuario();
+    PuntoControl puntoDeCOntrol = new PuntoControl();
+    Usuario nuevoUsuario = new Usuario();
+    private String nombre;
     /**
      * Creates new form NuevoUsuario
      */
@@ -187,6 +193,11 @@ public class NuevoUsuario extends javax.swing.JInternalFrame {
 
         Rutas.setFont(new java.awt.Font("Dialog", 0, 22)); // NOI18N
         Rutas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "******" }));
+        Rutas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                RutasMousePressed(evt);
+            }
+        });
         Rutas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 RutasActionPerformed(evt);
@@ -355,7 +366,7 @@ public class NuevoUsuario extends javax.swing.JInternalFrame {
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
         char c = evt.getKeyChar();
-        if ((c<'a'|| c>'z') && (c<'A'||c>'z')&&(c<' '|| c>' ')) {
+        if ((c<'a'|| c>'z') && (c<'A'||c>'z')) {
             evt.consume();}
     }//GEN-LAST:event_txtNombreKeyTyped
 
@@ -397,19 +408,21 @@ public class NuevoUsuario extends javax.swing.JInternalFrame {
 
     private void txtApellidoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoKeyTyped
          char c = evt.getKeyChar();
-        if ((c<'a'|| c>'z') && (c<'A'||c>'z')&&(c<' '|| c>' ')) {
+        if ((c<'a'|| c>'z') && (c<'A'||c>'z')) {
             evt.consume();}
     }//GEN-LAST:event_txtApellidoKeyTyped
 
     private void RutasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RutasActionPerformed
-        if(Rutas.getSelectedIndex()==2){
-            panelAsignar.setVisible(true);
-        }
+
     }//GEN-LAST:event_RutasActionPerformed
 
     private void rangosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rangosActionPerformed
         verRango();
     }//GEN-LAST:event_rangosActionPerformed
+
+    private void RutasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RutasMousePressed
+        puntoDeCOntrol.ListarRutas(IngresarUsuario.conector, Rutas);
+    }//GEN-LAST:event_RutasMousePressed
 
     private int validador;
     
@@ -431,20 +444,20 @@ public class NuevoUsuario extends javax.swing.JInternalFrame {
             validarContraseñas();
             if(validador ==2){
                 validarCUI();
-                if(validador == 2){
-                            
+                if(validador == 2){    
                     validarCelular();
                     if(validador ==2){
                         validarRango();
                         if(validador==2){
-                            AsignarPrivilegios(IngresarUsuario.conector);
+                            nombre= txtNombre.getText()+" "+txtApellido.getText();
+                            nuevoUsuario.setNombreUsuario(nombre);
+                            validador = nuevoUsuario.AsignarPrivilegios(IngresarUsuario.conector);
                             if(validador==2){
-                                crearUsuario(IngresarUsuario.conector);
+                                validador = nuevoUsuario.CrearUsuario(IngresarUsuario.conector);
                                 if(validador == 2){
                                     VaciarCampos();
-                                this.setVisible(false);
+                                    this.setVisible(false);
                                 }
-                                
                             }
                         }
                     }
@@ -468,6 +481,7 @@ public class NuevoUsuario extends javax.swing.JInternalFrame {
             validador=1;
         } if(txtCUI.getText().length()==13){
             validador =2;
+            nuevoUsuario.setCUI(txtCUI.getText());
         }
     }
     
@@ -475,7 +489,9 @@ public class NuevoUsuario extends javax.swing.JInternalFrame {
         if(txtCelular.getText().length()!=8){
             JOptionPane.showMessageDialog(null,"CUI requiere 13 digitos");
             validador=1;
-        } if(txtCelular.getText().length()==9){
+        } if(txtCelular.getText().length()==8){
+            nuevoUsuario.setCelular(Integer.parseInt(txtCelular.getText()));
+            System.out.println();
             validador =2;
         }
     }
@@ -496,6 +512,7 @@ public class NuevoUsuario extends javax.swing.JInternalFrame {
             } 
             puntero++; 
             txtAdvertencia.setVisible(false);
+            nuevoUsuario.setContraseña(contraseña1.getText());
             validador=2;
             } 
         } 
@@ -507,52 +524,22 @@ public class NuevoUsuario extends javax.swing.JInternalFrame {
             panelAsignar.setVisible(false);
         }else if(rangos.getSelectedIndex()==1){
             rango = "administrador";
+            nuevoUsuario.setRango(rango);
             panelAsignar.setVisible(false);
         }else if(rangos.getSelectedIndex()==2){
             rango = "operador";
+            nuevoUsuario.setRango(rango);
             panelAsignar.setVisible(true);
         }else if(rangos.getSelectedIndex()==3){
             rango = "recepcionista";
+            nuevoUsuario.setRango(rango);
             panelAsignar.setVisible(false);
         }
     }
    
     
-    private void crearUsuario(ConectorMySQL conector){
-         String nombre= txtNombre.getText()+" "+txtApellido.getText();
-         int celular = Integer.parseInt(txtCelular.getText());
-         try{
-            Statement instruccionSQL3 = conector.getConexion().createStatement();
-            instruccionSQL3.executeUpdate("INSERT INTO Usuario VALUES ('"+ nombre+"','"+txtCUI.getText()+"','"+contraseña1.getText()+"','"+rango+"',"+celular+",'Activo');");
-            JOptionPane.showMessageDialog(null,"El usuario "+ txtNombre.getText() + "se ha Registrado con exito");
-            validador=2;
-             System.out.println(nombre);
-        } catch (Exception e){
-            System.out.println("ha fallado la conexion en crear usuario" );
-            e.printStackTrace();
-            validador =1;
-        }
-    }
     
-    private void AsignarPrivilegios(ConectorMySQL conector){
-        try{
-            String nombre= txtNombre.getText()+" "+txtApellido.getText();
-            System.out.println(nombre);
-            Statement instruccionSQL3 = conector.getConexion().createStatement();
-            instruccionSQL3.execute("CREATE USER '"+ nombre+"'@'%'"+" IDENTIFIED BY '"+contraseña1.getText()+"';");
-            System.out.println("CREATE USER '"+ nombre+"'@'%'"+" IDENTIFIED BY '"+contraseña1.getText()+"';");
-            System.out.println("GRANT '"+rango+"'TO '"+nombre+"'@'%';");
-            Statement instruccionSQL4 = conector.getConexion().createStatement();
-            instruccionSQL4.execute("GRANT '"+rango+"'TO '"+nombre+"'@'%';");
-            instruccionSQL4.execute("SET DEFAULT ROLE ALL TO '" +nombre+"'@'%';");
-            validador=2;
-        } catch (SQLException e){
-            System.out.println("ha fallado la conexion" );
-            e.printStackTrace();
-            validador =1;
-        }   
-    }
-   
+    
     private void Diseño(){
         txtNombre.setVisible(true);
         this.setClosable(true);
@@ -564,13 +551,13 @@ public class NuevoUsuario extends javax.swing.JInternalFrame {
     }
 
     private void VaciarCampos(){
-        txtApellido.setText("                ");
-        txtCUI.setText("              ");
-        txtNombre.setText("              ");
-        txtCelular.setText("             ");
+        txtApellido.setText("");
+        txtCUI.setText("");
+        txtNombre.setText("");
+        txtCelular.setText("");
         rangos.setSelectedIndex(0);
-        contraseña.setText("             ");
-        contraseña1.setText("             ");
+        contraseña.setText("");
+        contraseña1.setText("");
         panelAsignar.setVisible(false);
         txtAdvertencia.setVisible(false);
     }

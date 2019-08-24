@@ -63,7 +63,7 @@
                   <EmptySpace min="-2" pref="128" max="-2" attributes="0"/>
                   <Component id="LblTitulo1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
-                  <Component id="lblNombreReporte" min="-2" pref="191" max="-2" attributes="0"/>
+                  <Component id="lblNombreReporte" min="-2" pref="363" max="-2" attributes="0"/>
                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -79,7 +79,7 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="panelFechas" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" pref="274" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" pref="277" max="32767" attributes="0"/>
                   <EmptySpace min="-2" pref="109" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -96,14 +96,14 @@
             <Component class="javax.swing.JTable" name="tablaReportes">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Dialog" size="20" style="0"/>
+                  <Font name="Dialog" size="18" style="1"/>
                 </Property>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="4" rowCount="4">
-                    <Column editable="true" title="campo 1" type="java.lang.Object"/>
-                    <Column editable="true" title="campo 2" type="java.lang.Object"/>
-                    <Column editable="true" title="campo 3" type="java.lang.Object"/>
-                    <Column editable="true" title="campo 4" type="java.lang.Object"/>
+                    <Column editable="false" title="campo 1" type="java.lang.Object"/>
+                    <Column editable="false" title="campo 2" type="java.lang.Object"/>
+                    <Column editable="false" title="campo 3" type="java.lang.Object"/>
+                    <Column editable="false" title="campo 4" type="java.lang.Object"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">

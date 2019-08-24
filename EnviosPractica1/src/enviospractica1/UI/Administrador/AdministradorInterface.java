@@ -5,6 +5,12 @@
  */
 package enviospractica1.UI.Administrador;
 
+import enviospractica1.ConectorMySQL;
+import enviospractica1.UI.IngresarUsuario;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 /**
  *
  * @author astridmc
@@ -15,11 +21,19 @@ public class AdministradorInterface extends javax.swing.JInternalFrame {
     /**
      * Creates new form AdministradorInterface
      */
-    NuevoUsuario registrarUsuario = new NuevoUsuario();
-    DesactivaUsuario desactivaUsuario  = new DesactivaUsuario();
+    private String codigoRuta;
+    private String codigoPunto;
+    private int numero;
+    
+    
+    
+    NuevaRuta nuevaRuta;
+    NuevoPuntoDeControl agregarPunto;
     Reportes reporte;
+    
     public AdministradorInterface() {
         initComponents();
+        Diseño();
     }
 
     /**
@@ -36,14 +50,17 @@ public class AdministradorInterface extends javax.swing.JInternalFrame {
         btnUsuarios = new javax.swing.JMenu();
         btnAgregarUsuario = new javax.swing.JMenuItem();
         btnActivarDesactivar = new javax.swing.JMenuItem();
+        btnMisUsuarios = new javax.swing.JMenuItem();
         btnRutas = new javax.swing.JMenu();
         btnCrearRuta = new javax.swing.JMenuItem();
         btnAgregarPuntoControl = new javax.swing.JMenuItem();
+        btnCambiarPrecio = new javax.swing.JMenuItem();
         btnINformacion = new javax.swing.JMenu();
         btnReporteRutas = new javax.swing.JMenuItem();
         btnGanancias = new javax.swing.JMenuItem();
         btnClientes = new javax.swing.JMenuItem();
         btnRutasPopulares = new javax.swing.JMenuItem();
+        btnPuntosDeControl = new javax.swing.JMenuItem();
 
         jDesktopUsuarios.setBackground(new java.awt.Color(0, 201, 178));
 
@@ -76,6 +93,17 @@ public class AdministradorInterface extends javax.swing.JInternalFrame {
         });
         btnUsuarios.add(btnActivarDesactivar);
 
+        btnMisUsuarios.setBackground(new java.awt.Color(1, 1, 1));
+        btnMisUsuarios.setForeground(new java.awt.Color(254, 254, 254));
+        btnMisUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/enviospractica1/UI/Imagenes/nuevoUsuario.png"))); // NOI18N
+        btnMisUsuarios.setText("Ver Usuarios");
+        btnMisUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMisUsuariosActionPerformed(evt);
+            }
+        });
+        btnUsuarios.add(btnMisUsuarios);
+
         barraMenu.add(btnUsuarios);
 
         btnRutas.setBackground(new java.awt.Color(1, 1, 1));
@@ -97,13 +125,24 @@ public class AdministradorInterface extends javax.swing.JInternalFrame {
         btnAgregarPuntoControl.setBackground(new java.awt.Color(1, 1, 1));
         btnAgregarPuntoControl.setForeground(new java.awt.Color(254, 254, 254));
         btnAgregarPuntoControl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/enviospractica1/UI/Imagenes/punto.png"))); // NOI18N
-        btnAgregarPuntoControl.setText("Agregat Punto de Control");
+        btnAgregarPuntoControl.setText("Agregar Punto de Control");
         btnAgregarPuntoControl.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarPuntoControlActionPerformed(evt);
             }
         });
         btnRutas.add(btnAgregarPuntoControl);
+
+        btnCambiarPrecio.setBackground(new java.awt.Color(1, 1, 1));
+        btnCambiarPrecio.setForeground(new java.awt.Color(254, 254, 254));
+        btnCambiarPrecio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/enviospractica1/UI/Imagenes/nuevaRuta.png"))); // NOI18N
+        btnCambiarPrecio.setText("Modificar Cuotas");
+        btnCambiarPrecio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCambiarPrecioActionPerformed(evt);
+            }
+        });
+        btnRutas.add(btnCambiarPrecio);
 
         barraMenu.add(btnRutas);
 
@@ -156,6 +195,17 @@ public class AdministradorInterface extends javax.swing.JInternalFrame {
         });
         btnINformacion.add(btnRutasPopulares);
 
+        btnPuntosDeControl.setBackground(new java.awt.Color(1, 1, 1));
+        btnPuntosDeControl.setForeground(new java.awt.Color(254, 254, 254));
+        btnPuntosDeControl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/enviospractica1/UI/Imagenes/localizar.png"))); // NOI18N
+        btnPuntosDeControl.setText("Ver Puntos de Control");
+        btnPuntosDeControl.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPuntosDeControlActionPerformed(evt);
+            }
+        });
+        btnINformacion.add(btnPuntosDeControl);
+
         barraMenu.add(btnINformacion);
 
         setJMenuBar(barraMenu);
@@ -175,16 +225,24 @@ public class AdministradorInterface extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarUsuarioActionPerformed
-        registrarUsuario.setVisible(true);
+        NuevoUsuario registrarUsuario = new NuevoUsuario();
         jDesktopUsuarios.add(registrarUsuario);
+        registrarUsuario.setVisible(true);
     }//GEN-LAST:event_btnAgregarUsuarioActionPerformed
 
     private void btnCrearRutaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearRutaActionPerformed
-       
+        AsignarCodigoRuta(IngresarUsuario.conector);
+        System.out.println(numero);
+        nuevaRuta = new NuevaRuta(numero);
+        jDesktopUsuarios.add(nuevaRuta);
+        nuevaRuta.setVisible(true);
     }//GEN-LAST:event_btnCrearRutaActionPerformed
 
     private void btnAgregarPuntoControlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarPuntoControlActionPerformed
-        // TODO add your handling code here:
+        AsignarCodigoPunto(IngresarUsuario.conector);
+        agregarPunto = new NuevoPuntoDeControl(numero);
+        jDesktopUsuarios.add(agregarPunto);
+        agregarPunto.setVisible(true);
     }//GEN-LAST:event_btnAgregarPuntoControlActionPerformed
 
     private void btnReporteRutasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteRutasActionPerformed
@@ -209,27 +267,85 @@ public class AdministradorInterface extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnGananciasActionPerformed
 
     private void btnRutasPopularesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRutasPopularesActionPerformed
-        reconocedor =24;
+        reconocedor =4;
         reporte = new Reportes(reconocedor);
         reporte.setVisible(true);
         jDesktopUsuarios.add(reporte);
     }//GEN-LAST:event_btnRutasPopularesActionPerformed
 
     private void btnActivarDesactivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActivarDesactivarActionPerformed
-        desactivaUsuario.setVisible(true);
+        DesactivaUsuario desactivaUsuario  = new DesactivaUsuario();
         jDesktopUsuarios.add(desactivaUsuario);
+        desactivaUsuario.setVisible(true);
     }//GEN-LAST:event_btnActivarDesactivarActionPerformed
 
+    private void btnCambiarPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarPrecioActionPerformed
+        ModificadorPrecio modificarPrecio = new ModificadorPrecio();
+        jDesktopUsuarios.add(modificarPrecio);
+        modificarPrecio.setVisible(true);
+    }//GEN-LAST:event_btnCambiarPrecioActionPerformed
+
+    private void btnPuntosDeControlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPuntosDeControlActionPerformed
+        reconocedor =5;
+        reporte = new Reportes(reconocedor);
+        reporte.setVisible(true);
+        jDesktopUsuarios.add(reporte);
+    }//GEN-LAST:event_btnPuntosDeControlActionPerformed
+
+    private void btnMisUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMisUsuariosActionPerformed
+        reconocedor =6;
+        reporte = new Reportes(reconocedor);
+        reporte.setVisible(true);
+        jDesktopUsuarios.add(reporte);
+    }//GEN-LAST:event_btnMisUsuariosActionPerformed
+
+    public void AsignarCodigoRuta(ConectorMySQL conector){
+        
+        
+        try{
+            Statement instruccionSQL = conector.getConexion().createStatement();
+            instruccionSQL.executeQuery("USE enviosPractica");
+            ResultSet obtenerUltimaRuta = instruccionSQL.executeQuery("SELECT MAX(codigoRuta) FROM Ruta;");
+            System.out.println(obtenerUltimaRuta.first());
+            codigoRuta= obtenerUltimaRuta.getString("MAX(codigoRuta)");
+            System.out.println(codigoRuta);
+            numero = Integer.parseInt(String.valueOf(codigoRuta.charAt(1)))+1;
+        } catch ( SQLException e){
+            System.out.println("ha fallado la conexion en asignar codigo Ruta"  );
+        }
+    }
+    
+    public void AsignarCodigoPunto(ConectorMySQL conector){
+        try{
+            Statement instruccionSQL = conector.getConexion().createStatement();
+            instruccionSQL.executeQuery("USE enviosPractica");
+            ResultSet obtenerUltimoPunto = instruccionSQL.executeQuery("SELECT MAX(codPuntoDeControl) FROM PuntoDeControl;");
+            System.out.println(obtenerUltimoPunto.first());
+            codigoPunto= obtenerUltimoPunto.getString("MAX(codPuntoDeControl)");
+            numero = Integer.parseInt(String.valueOf(codigoPunto.charAt(1)))+1;
+            System.out.println(numero);
+        } catch ( SQLException e){
+            System.out.println("ha fallado la conexion en crear usuario Punto" );
+        }
+    }
+    
+    private void Diseño(){
+        this.setResizable(true);
+        this.setTitle("ADMINISTRADOR");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar barraMenu;
     private javax.swing.JMenuItem btnActivarDesactivar;
     private javax.swing.JMenuItem btnAgregarPuntoControl;
     private javax.swing.JMenuItem btnAgregarUsuario;
+    private javax.swing.JMenuItem btnCambiarPrecio;
     private javax.swing.JMenuItem btnClientes;
     private javax.swing.JMenuItem btnCrearRuta;
     private javax.swing.JMenuItem btnGanancias;
     private javax.swing.JMenu btnINformacion;
+    private javax.swing.JMenuItem btnMisUsuarios;
+    private javax.swing.JMenuItem btnPuntosDeControl;
     private javax.swing.JMenuItem btnReporteRutas;
     private javax.swing.JMenu btnRutas;
     private javax.swing.JMenuItem btnRutasPopulares;

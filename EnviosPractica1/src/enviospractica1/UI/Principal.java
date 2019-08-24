@@ -149,37 +149,29 @@ public class Principal extends javax.swing.JFrame {
     private void btnRecepcionistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecepcionistaActionPerformed
         acceder.setVisible(true);
         int reconocedor;
-            try {
-                reconocedor = acceder.reconocerUsuario();
-                if(!acceder.isVisible()){
-                    if(acceder.reconocerUsuario()==3){
-                        recepcionistaInterface.setVisible(true);
-                        jDesktopUsuarios.add(recepcionistaInterface);
-                    }else if(acceder.reconocerUsuario()!=3){
-                        JOptionPane.showMessageDialog(null,"El usuario no tiene permitido el acceso a Recepcionista");
-                    }
-                }
-            } catch (IOException ex) {
-                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        reconocedor = acceder.reconocerUsuario();
+        if(!acceder.isVisible()){
+            if(acceder.reconocerUsuario()==3){
+                recepcionistaInterface.setVisible(true);
+                jDesktopUsuarios.add(recepcionistaInterface);
+            }else if(acceder.reconocerUsuario()!=3){
+                JOptionPane.showMessageDialog(null,"El usuario no tiene permitido el acceso a Recepcionista");
             }
+        }
         
     }//GEN-LAST:event_btnRecepcionistaActionPerformed
 
     private void btnOPeradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOPeradorActionPerformed
         acceder.setVisible(true);
         int reconocedor;
-        try {
-            reconocedor = acceder.reconocerUsuario();
-            if(!acceder.isVisible()){
-                if(reconocedor==2){
-                    operadorInterface.setVisible(true);
-                    jDesktopUsuarios.add(operadorInterface);
-                }else if(acceder.reconocerUsuario()!=2){
-                    JOptionPane.showMessageDialog(null,"El usuario no tiene permitido el acceso a Recepcionista");
-                } 
-             }
-        } catch (IOException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        reconocedor = acceder.reconocerUsuario();
+        if(!acceder.isVisible()){
+            if(reconocedor==2){
+                operadorInterface.setVisible(true);
+                jDesktopUsuarios.add(operadorInterface);
+            }else if(acceder.reconocerUsuario()!=2){
+                JOptionPane.showMessageDialog(null,"El usuario no tiene permitido el acceso a Recepcionista");
+            }
         }
        
     }//GEN-LAST:event_btnOPeradorActionPerformed
@@ -187,20 +179,21 @@ public class Principal extends javax.swing.JFrame {
     private void btnAdministradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministradorActionPerformed
         acceder.setVisible(true);
         if(!acceder.isVisible()){
-            try {
-                if(acceder.reconocerUsuario()==1){
-                    AdministradorInterface.setVisible(true);
-                    jDesktopUsuarios.add(AdministradorInterface);
-                }else if(acceder.reconocerUsuario()!=1){
-                    JOptionPane.showMessageDialog(null,"El usuario no tiene permitido el acceso a Administrador");
-                }
-            } catch (IOException ex) {
-                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            if(acceder.reconocerUsuario()==1){
+                AdministradorInterface.setVisible(true);
+                jDesktopUsuarios.add(AdministradorInterface);
+            }else if(acceder.reconocerUsuario()!=1){
+                JOptionPane.showMessageDialog(null,"El usuario no tiene permitido el acceso a Administrador");
             }
         }
     }//GEN-LAST:event_btnAdministradorActionPerformed
 
-    
+     private void Diseño(){
+        setTitle("EMPRESA DE ENVIOS");
+        setLocation(400,0);
+        ImageIcon portada = new ImageIcon("2.png");
+        this.setIconImage(new ImageIcon("2.png").getImage());
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar barraMenu;
@@ -214,12 +207,4 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblImagen;
     // End of variables declaration//GEN-END:variables
-
-    private void Diseño(){
-        setTitle("EMPRESA DE ENVIOS");
-        setLocation(400,0);
-        ImageIcon portada = new ImageIcon("2.png");
-        this.setIconImage(new ImageIcon("2.png").getImage());
-    }
-
 }

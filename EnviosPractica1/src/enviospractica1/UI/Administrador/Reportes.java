@@ -5,12 +5,22 @@
  */
 package enviospractica1.UI.Administrador;
 
+import enviospractica1.Backend.PuntoControl;
+import enviospractica1.Backend.Ruta;
+import enviospractica1.Backend.Usuario;
+import enviospractica1.UI.IngresarUsuario;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+
 /**
  *
  * @author astridmc
  */
 public class Reportes extends javax.swing.JInternalFrame {
 
+    PuntoControl puntoControl = new PuntoControl();
+    Usuario usuario = new Usuario();
+    Ruta rutas = new Ruta();
     int reconocedor= 0;
     /**
      * Creates new form Reportes
@@ -49,7 +59,7 @@ public class Reportes extends javax.swing.JInternalFrame {
 
         jPanel1.setBackground(new java.awt.Color(169, 244, 219));
 
-        tablaReportes.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
+        tablaReportes.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         tablaReportes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -60,7 +70,15 @@ public class Reportes extends javax.swing.JInternalFrame {
             new String [] {
                 "campo 1", "campo 2", "campo 3", "campo 4"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tablaReportes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 tablaReportesMouseEntered(evt);
@@ -164,7 +182,7 @@ public class Reportes extends javax.swing.JInternalFrame {
                 .addGap(128, 128, 128)
                 .addComponent(LblTitulo1)
                 .addGap(42, 42, 42)
-                .addComponent(lblNombreReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblNombreReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -177,7 +195,7 @@ public class Reportes extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(panelFechas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
                 .addGap(109, 109, 109))
         );
 
@@ -207,10 +225,8 @@ public class Reportes extends javax.swing.JInternalFrame {
          if (reconocedor ==1) {
             panelFechas.setVisible(false);
             lblNombreReporte.setText("RUTAS");
-            tablaReportes.getColumnModel().getColumn(0).setHeaderValue("Codigo Ruta");
-            tablaReportes.getColumnModel().getColumn(1).setHeaderValue("estado       ");
-            tablaReportes.getColumnModel().getColumn(2).setHeaderValue("No. de paquetes en ruta");
-            tablaReportes.getColumnModel().getColumn(3).setHeaderValue("No. de paquetes procesados");
+            centrar_datos();
+            rutas.leerRuta(IngresarUsuario.conector, tablaReportes);
         } else if(reconocedor ==2){
             panelFechas.setVisible(false);
             lblNombreReporte.setText("CLIENTES");
@@ -226,16 +242,35 @@ public class Reportes extends javax.swing.JInternalFrame {
             tablaReportes.getColumnModel().getColumn(2).setHeaderValue("  Costos  ");
             tablaReportes.getColumnModel().getColumn(3).setHeaderValue(" GANANCIAS ");
         }else if(reconocedor ==4){
-             lblNombreReporte.setText("Rutas Populares");
-             panelFechas.setVisible(true);
+            lblNombreReporte.setText("Rutas Populares");
+            panelFechas.setVisible(true);
             tablaReportes.getColumnModel().getColumn(0).setHeaderValue("Cod. Ruta   ");
             tablaReportes.getColumnModel().getColumn(1).setHeaderValue("No.Puntos de Control");
             tablaReportes.getColumnModel().getColumn(2).setHeaderValue(" Cantidad de Paquetes ");
             tablaReportes.getColumnModel().getColumn(3).setHeaderValue(" Destino ");
+        }else if(reconocedor ==5){
+            lblNombreReporte.setText("Puntos De Control");
+            panelFechas.setVisible(false);
+            centrar_datos();
+            puntoControl.leerPuntosDeControl(IngresarUsuario.conector, tablaReportes);
+        }else if(reconocedor== 6){
+            lblNombreReporte.setText("USUARIOS");
+            panelFechas.setVisible(false);
+            centrar_datos();
+            usuario.leerUsuarios(IngresarUsuario.conector, tablaReportes);
         }
     }
+    public void centrar_datos(){
+           DefaultTableCellRenderer modelocentrar = new DefaultTableCellRenderer();
+            modelocentrar.setHorizontalAlignment(SwingConstants.CENTER);
+            tablaReportes.getColumnModel().getColumn(0).setCellRenderer(modelocentrar);
+            tablaReportes.getColumnModel().getColumn(1).setCellRenderer(modelocentrar); 
+            tablaReportes.getColumnModel().getColumn(2).setCellRenderer(modelocentrar); 
+            tablaReportes.getColumnModel().getColumn(3).setCellRenderer(modelocentrar); 
+        }
     
     public void Diseño() {
+        centrar_datos();
         this.setClosable(true);
         this.setResizable(true);
         this.setIconifiable(true);

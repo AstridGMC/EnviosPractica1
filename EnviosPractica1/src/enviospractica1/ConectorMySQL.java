@@ -46,8 +46,8 @@ public class ConectorMySQL {
         }
         // Si la conexion NO fue exitosa mostramos un mensaje de error
         catch ( SQLException e){
-            JOptionPane.showMessageDialog(null,"Error de conexion contraseña no valida");
             System.out.println("coneccion no establecida"+e);
+            JOptionPane.showMessageDialog(null, "El nombre de usuario y/o contrasenia no son validos.");
         }
     }
     
@@ -87,7 +87,6 @@ public class ConectorMySQL {
                 return 0;
             }
             } catch (SQLException e) {
-
                 System.out.println("rango nulo  " + e.getSQLState());
                 return 0;
             }
