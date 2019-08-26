@@ -202,14 +202,14 @@ public class Paquete {
         }
     }
      
-    public void ingresarHoras(ConectorMySQL conector, String numeroGuia, int horas){
+    public void ingresarHoras(ConectorMySQL conector, String numeroGuia, int horas, int precio){
          try{
             System.out.println(numeroGuia);
              System.out.println(horas);
             Statement instruccionSQL3 = conector.getConexion().createStatement();
             instruccionSQL3.executeQuery("USE enviosPractica");
             instruccionSQL3.executeUpdate("UPDATE Pasar SET numeroHoras = "+horas+" WHERE (numeroDeGuia ='"+numeroGuia+"');");
-            
+            instruccionSQL3.executeUpdate("UPDATE Pasar SET costoTotalPorPaquete = "+precio+" WHERE (numeroDeGuia ='"+numeroGuia+"');");
         } catch (HeadlessException | SQLException e){
             System.out.println("ha fallado la conexion en ingresar horas" );
             

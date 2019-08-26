@@ -263,7 +263,8 @@ public class ProcesarPaquete extends javax.swing.JInternalFrame {
         if(txtNoHoras.getText().isEmpty()){
             JOptionPane.showMessageDialog(null,"NO HA ESPECIFICADO EL NUMRO DE HORAS");
         }else{
-            paquete.ingresarHoras(IngresarUsuario.conector, paquetes.getSelectedItem().toString(),Integer.valueOf(txtNoHoras.getText()));
+            int precio= puntosControl.obtenerPrecioIndividual(IngresarUsuario.conector)* Integer.parseInt(txtNoHoras.getText());
+            paquete.ingresarHoras(IngresarUsuario.conector, paquetes.getSelectedItem().toString(),Integer.valueOf(txtNoHoras.getText()),precio );
             JOptionPane.showMessageDialog(null,"EL PAQUETE HA SIDO PROCESADO");
             vaciarCampos();
         }

@@ -129,7 +129,7 @@ public class PuntoControl {
         }
     }
     
-     public void obtenerPrecioIndividual(ConectorMySQL conector , javax.swing.JComboBox<String> rutas){
+    public void obtenerPrecioIndividual(ConectorMySQL conector , javax.swing.JComboBox<String> rutas){
         try{
             codigo= rutas.getSelectedItem().toString();
             Statement instruccionSQL3 = conector.getConexion().createStatement();
@@ -143,6 +143,21 @@ public class PuntoControl {
             e.printStackTrace();
         }
     }
+    public int obtenerPrecioIndividual(ConectorMySQL conector){
+        try{
+            Statement instruccionSQL3 = conector.getConexion().createStatement();
+            instruccionSQL3.executeQuery("USE enviosPractica");
+            ResultSet obtenerPresioGlobal= instruccionSQL3.executeQuery("SELECT MAX(precioGlobal) FROM PuntoDeControl;");
+            obtenerPresioGlobal.first();
+            return obtenerPresioGlobal.getInt("MAX(precioGlobal)");
+            
+        } catch (HeadlessException | SQLException e){
+            System.out.println("ha fallado la conexion en obtener Numero" );
+            e.printStackTrace();
+            return 0;
+        }
+    }
+    
     
     public void obtenerNumero(ConectorMySQL conector, String codRuta){
         try{

@@ -312,7 +312,7 @@ public class AdministradorInterface extends javax.swing.JInternalFrame {
             System.out.println("ha fallado la conexion en asignar codigo Ruta"  );
         }
     }
-    int sumar =10;
+    int sumar =12;
     public void AsignarCodigoPunto(ConectorMySQL conector){
         
         try{
