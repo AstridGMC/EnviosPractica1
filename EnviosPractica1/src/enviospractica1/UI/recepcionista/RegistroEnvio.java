@@ -5,8 +5,17 @@
  */
 package enviospractica1.UI.recepcionista;
 
-import enviospractica1.UI.Factura;
+import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
+import enviospractica1.Backend.Cliente;
+import enviospractica1.Backend.Destino;
+import enviospractica1.Backend.Factura;
+import enviospractica1.Backend.Paquete;
+import enviospractica1.UI.IngresarUsuario;
+import enviospractica1.UI.Principal;
+import enviospractica1.UI.detalleFactura;
 import java.awt.Frame;
+import static java.awt.Frame.ICONIFIED;
+import java.util.Date;
 import javax.swing.JOptionPane;
 
 /**
@@ -21,7 +30,24 @@ public class RegistroEnvio extends javax.swing.JInternalFrame {
     
     Frame f = JOptionPane.getFrameForComponent(this);
     
-    Factura factura = new Factura(f);
+    Factura factura = new Factura();;
+    Destino destino = new Destino();
+    Cliente cliente = new Cliente();;
+    Paquete paquete;
+    private int idFactura =0;
+    private int total=0;
+    
+    private int  peso;
+    private String nit;
+    private String cui;
+    private String direccion;
+    java.util.Date fecha = new Date();
+    boolean prioridad;
+    int validador;
+    int codDestino;
+    int auxiliar =0;
+    String nombre;
+    int numeroGuia;
     
     public RegistroEnvio() {
         initComponents();
@@ -38,23 +64,19 @@ public class RegistroEnvio extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         panelFondo = new javax.swing.JPanel();
-        lblNIT = new javax.swing.JLabel();
         lblConsejo = new javax.swing.JLabel();
-        rBtnCF = new javax.swing.JRadioButton();
         panelDatos = new javax.swing.JPanel();
         lblNombre1 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
         lblDireccion1 = new javax.swing.JLabel();
         txtDireccion2 = new javax.swing.JTextField();
         lblDestino = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        lblDescripcion = new javax.swing.JLabel();
+        Destinos = new javax.swing.JComboBox<>();
         jSeparator1 = new javax.swing.JSeparator();
         lblDatos = new javax.swing.JLabel();
         txtPeso = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         lblPeso = new javax.swing.JLabel();
-        txtNIT = new javax.swing.JTextField();
         panelDatosReconocidos = new javax.swing.JPanel();
         lblNombres = new javax.swing.JLabel();
         lblNombre = new javax.swing.JLabel();
@@ -62,29 +84,21 @@ public class RegistroEnvio extends javax.swing.JInternalFrame {
         lblCUI1 = new javax.swing.JLabel();
         btnGuardar = new javax.swing.JButton();
         rBtnPrioridad = new javax.swing.JRadioButton();
-        txtDescripcion = new javax.swing.JTextField();
         lblTotal1 = new javax.swing.JLabel();
         lblDatos1 = new javax.swing.JLabel();
-        lblDatos2 = new javax.swing.JLabel();
+        lblTotal = new javax.swing.JLabel();
         lblPrioridad = new javax.swing.JLabel();
         btnAgregar = new javax.swing.JButton();
+        panelBuscar = new javax.swing.JPanel();
+        rBtnCF = new javax.swing.JRadioButton();
+        txtNIT = new javax.swing.JTextField();
+        lblNIT = new javax.swing.JLabel();
+        btnRegistrar = new javax.swing.JButton();
 
         panelFondo.setBackground(new java.awt.Color(141, 234, 179));
 
-        lblNIT.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        lblNIT.setForeground(new java.awt.Color(30, 65, 32));
-        lblNIT.setText("Ingrese Numero de NIT:");
-
         lblConsejo.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         lblConsejo.setText("Si el cliente no esta ingresado  en el sistema favor  Registrarlo antes :");
-
-        rBtnCF.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        rBtnCF.setText("CONSUMIDOR FINAL");
-        rBtnCF.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rBtnCFActionPerformed(evt);
-            }
-        });
 
         panelDatos.setBackground(new java.awt.Color(129, 240, 194));
         panelDatos.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 201, 178), 3, true));
@@ -151,11 +165,7 @@ public class RegistroEnvio extends javax.swing.JInternalFrame {
         lblDestino.setForeground(new java.awt.Color(30, 65, 32));
         lblDestino.setText("DESTINO");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        lblDescripcion.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        lblDescripcion.setForeground(new java.awt.Color(30, 65, 32));
-        lblDescripcion.setText("DESCRIPCION");
+        Destinos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         lblDatos.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         lblDatos.setText("DATOS DEL PAQUETE:");
@@ -179,19 +189,6 @@ public class RegistroEnvio extends javax.swing.JInternalFrame {
         lblPeso.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         lblPeso.setForeground(new java.awt.Color(30, 65, 32));
         lblPeso.setText("PESO ");
-
-        txtNIT.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
-        txtNIT.setForeground(new java.awt.Color(13, 58, 12));
-        txtNIT.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNITActionPerformed(evt);
-            }
-        });
-        txtNIT.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtNITKeyTyped(evt);
-            }
-        });
 
         panelDatosReconocidos.setBackground(new java.awt.Color(129, 240, 194));
         panelDatosReconocidos.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 201, 178), 3, true));
@@ -250,7 +247,7 @@ public class RegistroEnvio extends javax.swing.JInternalFrame {
         });
 
         rBtnPrioridad.setBackground(new java.awt.Color(21, 53, 44));
-        rBtnPrioridad.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        rBtnPrioridad.setFont(new java.awt.Font("Dialog", 1, 26)); // NOI18N
         rBtnPrioridad.setForeground(new java.awt.Color(254, 254, 254));
         rBtnPrioridad.setText("PRIORIDAD");
         rBtnPrioridad.addActionListener(new java.awt.event.ActionListener() {
@@ -259,9 +256,6 @@ public class RegistroEnvio extends javax.swing.JInternalFrame {
             }
         });
 
-        txtDescripcion.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
-        txtDescripcion.setForeground(new java.awt.Color(13, 58, 12));
-
         lblTotal1.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
         lblTotal1.setForeground(new java.awt.Color(146, 7, 7));
         lblTotal1.setText("Q.");
@@ -269,9 +263,9 @@ public class RegistroEnvio extends javax.swing.JInternalFrame {
         lblDatos1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         lblDatos1.setText(".00");
 
-        lblDatos2.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        lblDatos2.setForeground(new java.awt.Color(176, 1, 1));
-        lblDatos2.setText("******");
+        lblTotal.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        lblTotal.setForeground(new java.awt.Color(176, 1, 1));
+        lblTotal.setText("******");
 
         lblPrioridad.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         lblPrioridad.setText(".");
@@ -284,6 +278,70 @@ public class RegistroEnvio extends javax.swing.JInternalFrame {
             }
         });
 
+        panelBuscar.setBackground(new java.awt.Color(129, 240, 194));
+        panelBuscar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 201, 178), 3));
+
+        rBtnCF.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        rBtnCF.setText("CONSUMIDOR FINAL");
+        rBtnCF.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rBtnCFMouseClicked(evt);
+            }
+        });
+
+        txtNIT.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
+        txtNIT.setForeground(new java.awt.Color(13, 58, 12));
+        txtNIT.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNITKeyTyped(evt);
+            }
+        });
+
+        lblNIT.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        lblNIT.setForeground(new java.awt.Color(30, 65, 32));
+        lblNIT.setText("Ingrese Numero de NIT:");
+
+        btnRegistrar.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
+        btnRegistrar.setText("Registrar Cliente");
+        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelBuscarLayout = new javax.swing.GroupLayout(panelBuscar);
+        panelBuscar.setLayout(panelBuscarLayout);
+        panelBuscarLayout.setHorizontalGroup(
+            panelBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBuscarLayout.createSequentialGroup()
+                .addGroup(panelBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelBuscarLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblNIT)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBuscarLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(70, 70, 70)))
+                .addGroup(panelBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtNIT, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rBtnCF))
+                .addGap(41, 41, 41))
+        );
+        panelBuscarLayout.setVerticalGroup(
+            panelBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBuscarLayout.createSequentialGroup()
+                .addGap(0, 12, Short.MAX_VALUE)
+                .addGroup(panelBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNIT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNIT))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rBtnCF)
+                    .addComponent(btnRegistrar))
+                .addGap(2, 2, 2))
+        );
+
         javax.swing.GroupLayout panelFondoLayout = new javax.swing.GroupLayout(panelFondo);
         panelFondo.setLayout(panelFondoLayout);
         panelFondoLayout.setHorizontalGroup(
@@ -293,54 +351,51 @@ public class RegistroEnvio extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panelDatosReconocidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblDatos)
+                    .addComponent(panelDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblConsejo)
                     .addGroup(panelFondoLayout.createSequentialGroup()
                         .addComponent(lblTotal1)
                         .addGap(18, 18, 18)
-                        .addComponent(lblDatos2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblDatos1)
-                        .addGap(46, 46, 46)
-                        .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblPrioridad, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelFondoLayout.createSequentialGroup()
-                        .addComponent(lblNIT)
-                        .addGap(52, 52, 52)
-                        .addGroup(panelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(rBtnCF)
-                            .addComponent(txtNIT, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(lblConsejo)
-                    .addComponent(lblDatos)
-                    .addGroup(panelFondoLayout.createSequentialGroup()
-                        .addComponent(lblDescripcion)
-                        .addGap(41, 41, 41)
-                        .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(panelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelFondoLayout.createSequentialGroup()
+                                .addGap(185, 185, 185)
+                                .addComponent(lblPrioridad, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panelFondoLayout.createSequentialGroup()
+                                .addComponent(lblTotal)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblDatos1)
+                                .addGap(46, 46, 46)
+                                .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(panelFondoLayout.createSequentialGroup()
                         .addComponent(lblDestino)
                         .addGap(18, 18, 18)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Destinos, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(124, 124, 124)
                         .addComponent(lblPeso)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtPeso, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel5))
-                    .addComponent(rBtnPrioridad, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(panelDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel5)))
+                .addGap(234, 234, 234))
+            .addGroup(panelFondoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panelBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(panelFondoLayout.createSequentialGroup()
+                .addGap(304, 304, 304)
+                .addComponent(rBtnPrioridad, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelFondoLayout.setVerticalGroup(
             panelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelFondoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblConsejo)
-                .addGap(18, 18, 18)
-                .addGroup(panelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblNIT)
-                    .addComponent(txtNIT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(rBtnCF)
+                .addComponent(panelBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelDatosReconocidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(1, 1, 1)
@@ -353,29 +408,23 @@ public class RegistroEnvio extends javax.swing.JInternalFrame {
                 .addGroup(panelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblDestino)
                     .addGroup(panelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Destinos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txtPeso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel5)
                         .addComponent(lblPeso)))
-                .addGap(18, 18, 18)
-                .addGroup(panelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblDescripcion))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(rBtnPrioridad)
-                .addGap(2, 2, 2)
-                .addGroup(panelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelFondoLayout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(lblPrioridad))
-                    .addGroup(panelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(lblTotal1)
-                        .addGroup(panelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblDatos2)
-                            .addComponent(lblDatos1)
-                            .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblPrioridad)
+                .addGap(25, 25, 25)
+                .addGroup(panelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblTotal1)
+                    .addGroup(panelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblTotal)
+                        .addComponent(lblDatos1)
+                        .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -393,24 +442,13 @@ public class RegistroEnvio extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void rBtnPrioridadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rBtnPrioridadActionPerformed
-        prioridad();
+        lblPrioridad.setText("se agregaran Q.15.00  a su factura");
     }//GEN-LAST:event_rBtnPrioridadActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        factura.show();
+        auxiliar = 2;
+        Guardar(auxiliar);
     }//GEN-LAST:event_btnGuardarActionPerformed
-
-    private void txtNITKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNITKeyTyped
-        char f = evt.getKeyChar();
-        if(f<'0'||f>'9') evt.consume();
-        if(txtNIT.getText().length()==7) txtNIT.setText(txtNIT.getText()+"-");
-
-        if(txtNIT.getText().length()==9) evt.consume();
-    }//GEN-LAST:event_txtNITKeyTyped
-
-    private void txtNITActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNITActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNITActionPerformed
 
     private void txtPesoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesoKeyTyped
         char f = evt.getKeyChar();
@@ -437,16 +475,132 @@ public class RegistroEnvio extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreActionPerformed
 
-    private void rBtnCFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rBtnCFActionPerformed
-        Campos();
-    }//GEN-LAST:event_rBtnCFActionPerformed
-
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        vaciarCampos();
+        auxiliar =1;
+        Guardar(auxiliar);
+        
     }//GEN-LAST:event_btnAgregarActionPerformed
 
+    private void txtNITKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNITKeyTyped
+         char f = evt.getKeyChar();
+        if(f<'0'||f>'9') evt.consume();
+        if(txtNIT.getText().length()==7) txtNIT.setText(txtNIT.getText()+"-");
+
+        if(txtNIT.getText().length()==9) {
+            evt.consume();
+            if(cliente.getCUIClienteByID(IngresarUsuario.conector, txtNIT.getText())!=null){
+                lblNombres.setText(cliente.getNombreClienteByID(IngresarUsuario.conector, txtNIT.getText()));
+                lblCUI1.setText(cliente.getCUIClienteByID(IngresarUsuario.conector, txtNIT.getText()));
+                rBtnCF.setVisible(false);
+                btnRegistrar.setVisible(false);
+            }else{
+                btnRegistrar.setVisible(true);
+            }
+            
+        }else{
+            btnRegistrar.setVisible(false);
+            lblNombres.setText("");
+            lblCUI1.setText("");
+            rBtnCF.setVisible(true);
+        }
+    }//GEN-LAST:event_txtNITKeyTyped
+
+    private void rBtnCFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rBtnCFMouseClicked
+        Campos();
+    }//GEN-LAST:event_rBtnCFMouseClicked
+
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        RegistroCliente registrar = new RegistroCliente(txtNIT.getText());
+        registrar.setVisible(true);
+        RecepcionistaInterface.jDesktopUsuarios.add(registrar);
+        
+    }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    private void Guardar( int auxiliar){
+        
+        if(auxiliar ==1){
+            if(Guarda() ==2){
+                if(nit != null){
+                    cliente.aumentarPaquetesCliente(IngresarUsuario.conector, nit);
+                }
+                vaciarCampos();
+                System.out.println("guardando");
+                System.out.println(total);
+                lblTotal.setText(String.valueOf(total));
+                panelDatos.setVisible(false);
+                panelBuscar.setVisible(false);
+                panelDatosReconocidos.setVisible(false);
+                lblNombres.setText(nombre);
+                lblCUI.setVisible(false);
+                lblCUI1.setVisible(false);
+                panelDatosReconocidos.setVisible(true);
+            }
+            
+        }
+        if(auxiliar ==2){
+            factura.setMonto(total);
+            factura.setFecha(fecha);
+            factura.setNombreCliente(nombre);
+            factura.setIdFactura(idFactura);
+            factura.setMonto(total);
+            factura.setNombreCliente(nombre);
+            factura.GuardarFactura(IngresarUsuario.conector);
+            if(!rBtnCF.isVisible()){
+                
+            }
+                this.setVisible(false);
+                JOptionPane.showMessageDialog(null,"el envio se ha realizado con exito");
+                detalleFactura facturaDetalle = new detalleFactura(f, factura, cliente);
+                facturaDetalle.setVisible(true);
+        }
+    }
+    
+    public int Guarda(){
+        System.out.println("guarda");
+        validarCamposCliente();
+        if(validador ==2){
+            panelDatosReconocidos.setVisible(false);
+            panelDatos.setVisible(false);
+            validarCamposVaciosPaquete();
+            if(validador ==2){
+                peso = Integer.parseInt(txtPeso.getText());
+                System.out.println(idFactura);
+                if(destino.obtenerCodigo(IngresarUsuario.conector, Destinos.getSelectedItem().toString()) != 0){
+                    codDestino = destino.obtenerCodigo(IngresarUsuario.conector, Destinos.getSelectedItem().toString());
+                    paquete = new Paquete(peso,codDestino, prioridad,nombre );
+                    prioridad();
+                    numeroGuia= paquete.obtenerNumeroGuia(IngresarUsuario.conector);
+                    paquete.setNumeroGuia(numeroGuia);
+                    paquete.setEstado("en ruta");
+                    paquete.setPeso(Integer.parseInt(txtPeso.getText()));
+                    destino.obtenerPrecio(IngresarUsuario.conector, Destinos.getSelectedItem().toString());
+                    total = 3*Integer.parseInt(txtPeso.getText())+total;
+                    total = total + destino.getMonto();
+                    paquete.setPrecioPaquete(total);
+                    if(paquete.GuardarEnvio(IngresarUsuario.conector, idFactura)){
+                        
+                        lblTotal.setText(String.valueOf(total));
+                        System.out.println(total);
+                        
+                        return 2;
+                    }else{
+                        return 1;
+                    }    
+                }else{
+                    return 1;
+                }           
+            } else{
+                return 1;
+            } 
+        }else{
+            return 1;
+        } 
+    }
 
     private void Diseño(){
+        idFactura= factura.obtenerIDFactura();
+        System.out.println(idFactura);
+        rBtnCF.setVisible(true);
         panelDatos.setVisible(false);
         this.setClosable(true);
         this.setResizable(true);
@@ -466,28 +620,96 @@ public class RegistroEnvio extends javax.swing.JInternalFrame {
         }
     }
     
+    public void validarCamposCliente(){
+        if(panelDatos.isVisible()){
+            if(rBtnCF.isSelected()){
+                if(txtNombre.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(null,"no ha llenado Nombre");
+                    validador =1;
+                }else{
+                    cliente.setNombre(txtNombre.getText());
+                    cliente.setNIT("CF");
+                    cliente.setCUI("---------");
+                    validador = 2;
+                }
+                if(validador ==2){
+                    if(txtDireccion2.getText().isEmpty()){
+                        JOptionPane.showMessageDialog(null,"no ha llenado direccion");
+                    } else{
+                        direccion = txtDireccion2.getText();
+                        cliente.setDireccion(direccion);
+                        validador =2;
+                    }
+                }
+            }
+        } else  if(!panelDatos.isVisible()){
+            validador =2;
+        }
+        
+        if(!rBtnCF.isSelected()){
+            if(panelBuscar.isVisible()){
+                if(txtNIT.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(null,"no ha llenado nit");
+                    validador =1;
+                }else{
+                    
+                    cui = cliente.getCUIClienteByID(IngresarUsuario.conector, txtNIT.getText());
+                    cliente.setCUI(cui);
+                    nit = txtNIT.getText();
+                    cliente.setNIT(nit);
+                    nombre = cliente.getNombreClienteByID(IngresarUsuario.conector, txtNIT.getText());
+                    cliente.setNombre(nombre);
+                    direccion = cliente.getDireccionClienteByID(IngresarUsuario.conector, txtNIT.getText());
+                    cliente.setNombre(nombre);
+                    validador =2;
+                }
+            }else if(!panelBuscar.isVisible()){
+                System.out.println("nit no visible");
+                validador =2;
+            }
+            
+        }
+    }
+    
+    public void validarCamposVaciosPaquete(){
+        if(validador ==2){
+           if(txtPeso.getText().isEmpty()){
+                JOptionPane.showMessageDialog(null,"no ha llenado Peso");
+                validador =1;
+            }else if(!txtPeso.getText().isEmpty()){
+                validador =2;
+            }
+        }
+    }
+    
     public void prioridad(){
         if(rBtnPrioridad.isSelected()){
-            lblPrioridad.setText("se agregaran Q."+ "  a su factura");
+            lblPrioridad.setText("se agregaran Q."+paquete.getPrecioPrioridad()+ "  a su factura");
+            total = paquete.getPrecioPrioridad();
+            prioridad = true;
         } else if(!rBtnPrioridad.isSelected()){
             lblPrioridad.setText(" ");
+            prioridad= false;
         }
     }
     
     public void vaciarCampos(){
-        txtDescripcion.setText(" ");
         txtDireccion2.setText(" ");
         txtNIT.setText("");
         txtNombre.setText(" ");
-        txtPeso.setText(" ");
+        txtPeso.setText("");
         rBtnCF.setSelected(false);
         rBtnPrioridad.setSelected(false);
+        btnRegistrar.setVisible(false);
+        Destinos.removeAllItems();
+        destino.ListarDestinos(IngresarUsuario.conector, Destinos);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> Destinos;
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnGuardar;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton btnRegistrar;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblCUI;
@@ -495,8 +717,6 @@ public class RegistroEnvio extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblConsejo;
     private javax.swing.JLabel lblDatos;
     private javax.swing.JLabel lblDatos1;
-    private javax.swing.JLabel lblDatos2;
-    private javax.swing.JLabel lblDescripcion;
     private javax.swing.JLabel lblDestino;
     private javax.swing.JLabel lblDireccion1;
     private javax.swing.JLabel lblNIT;
@@ -505,13 +725,14 @@ public class RegistroEnvio extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblNombres;
     private javax.swing.JLabel lblPeso;
     private javax.swing.JLabel lblPrioridad;
+    private javax.swing.JLabel lblTotal;
     private javax.swing.JLabel lblTotal1;
+    private javax.swing.JPanel panelBuscar;
     private javax.swing.JPanel panelDatos;
     private javax.swing.JPanel panelDatosReconocidos;
     private javax.swing.JPanel panelFondo;
     private javax.swing.JRadioButton rBtnCF;
     private javax.swing.JRadioButton rBtnPrioridad;
-    private javax.swing.JTextField txtDescripcion;
     private javax.swing.JTextField txtDireccion2;
     private javax.swing.JTextField txtNIT;
     private javax.swing.JTextField txtNombre;

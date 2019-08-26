@@ -31,7 +31,7 @@ public class Ruta {
         this.codDestino = codDestino;
     }
     
-      public void identificarCodDestino(ConectorMySQL conector, javax.swing.JComboBox<String> destino){
+    public void identificarCodDestino(ConectorMySQL conector, javax.swing.JComboBox<String> destino){
         String destinos = destino.getSelectedItem().toString();
         Statement instruccionSQL5;
         try {
@@ -48,7 +48,7 @@ public class Ruta {
         }
     }
       
-      public boolean GuardarRutal(ConectorMySQL conector,javax.swing.JComboBox<String> destino , int numeroCodRuta){
+    public boolean GuardarRuta(ConectorMySQL conector,javax.swing.JComboBox<String> destino , int numeroCodRuta){
          try{
             identificarCodDestino(conector,destino);
             Statement instruccionSQL3 = conector.getConexion().createStatement();
@@ -61,7 +61,7 @@ public class Ruta {
         }
     }
       
-       public void leerRuta(ConectorMySQL conector, javax.swing.JTable tablaReportes){
+    public void leerRuta(ConectorMySQL conector, javax.swing.JTable tablaReportes){
         try {
             int codigoDestino =1;
             DefaultTableModel reportePuntos = new DefaultTableModel();
@@ -86,5 +86,46 @@ public class Ruta {
             
         }
     }
+       
+    public void ListarRutas(ConectorMySQL conector,javax.swing.JComboBox<String> rutas ){
+        try{
+            Statement instruccionSQL4 = conector.getConexion().createStatement();
+            instruccionSQL4.executeQuery("USE enviosPractica");
+            ResultSet obtenerRuta= instruccionSQL4.executeQuery("SELECT codigoRuta FROM Ruta");
+            obtenerRuta.first();
+            rutas.removeAllItems();
+            rutas.addItem(obtenerRuta.getString(1));
+            while(obtenerRuta.next()){
+                 rutas.addItem(obtenerRuta.getString("codigoRuta"));
+            }
+        } catch (HeadlessException | SQLException e){
+            System.out.println("ha fallado la conexion al leer rutas" );
+            e.printStackTrace();
+        }
+    }
+  
     
+    public void detallesRuta(ConectorMySQL conector, javax.swing.JTable tablaReportes, String codRuta){
+            
+        try {
+            tablaReportes.setVisible(true);
+            DefaultTableModel reportePuntos = new DefaultTableModel();
+            Statement instruccionSQL3 = conector.getConexion().createStatement();
+            instruccionSQL3.executeQuery("USE enviosPractica");
+            ResultSet rs= instruccionSQL3.executeQuery(" SELECT codPuntoDeControl, numeroPuntoControl, estado FROM PuntoDeControl WHERE codigoRuta ='"+codRuta+"' ;");
+            System.out.println(rs.first());
+            reportePuntos.setColumnIdentifiers(new Object[]{"Codigo de Ruta","Codigo Punto de Control" , "numero Punto De Control", "Estado" });
+            reportePuntos.addRow(new Object []{codRuta ,rs.getString("codPuntoDeControl"), rs.getInt("numeroPuntoControl"), rs.getString("estado")});
+            while(rs.next()){
+                reportePuntos.addRow(new Object []{codRuta ,rs.getString("codPuntoDeControl"), rs.getInt("numeroPuntoControl"), rs.getString("estado")});
+            }
+            tablaReportes.setModel(reportePuntos);
+            
+        } catch (SQLException e) {
+            System.out.println(" incorrecto no existe Rutas en la base de datos");
+            JOptionPane.showMessageDialog(null,"Hay Rutas Para este punto de Control");
+            tablaReportes.setVisible(false);
+        }
+    }
+       
 }

@@ -5,6 +5,12 @@
  */
 package enviospractica1.UI.operador;
 
+import enviospractica1.Backend.Destino;
+import enviospractica1.Backend.Factura;
+import enviospractica1.Backend.Paquete;
+import enviospractica1.Backend.PuntoControl;
+import enviospractica1.Backend.Usuario;
+import enviospractica1.UI.IngresarUsuario;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,7 +22,15 @@ public class ProcesarPaquete extends javax.swing.JInternalFrame {
     /**
      * Creates new form ProcesarPaquete
      */
+    String cui;
+    Usuario usuario = new Usuario();
+    PuntoControl puntosControl = new PuntoControl();
+    Paquete paquete = new Paquete();
+    Destino destino = new Destino();
+    Factura factura = new Factura();
+    private int validador;
     public ProcesarPaquete() {
+        validador=1;
         initComponents();
         Diseño();
     }
@@ -35,19 +49,17 @@ public class ProcesarPaquete extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         lblTitulo = new javax.swing.JLabel();
         lblNoGuia = new javax.swing.JLabel();
-        txtNoGuia = new javax.swing.JTextField();
         panelInfoPaquete = new javax.swing.JPanel();
-        remitenteTxt = new javax.swing.JLabel();
+        txtNombre = new javax.swing.JLabel();
         lblRemitente = new javax.swing.JLabel();
-        nombresTxt = new javax.swing.JLabel();
+        txtDestino = new javax.swing.JLabel();
         lblDestino = new javax.swing.JLabel();
-        lblNombre3 = new javax.swing.JLabel();
-        fechaTxt = new javax.swing.JLabel();
         lblNoHoras = new javax.swing.JLabel();
         txtNoHoras = new javax.swing.JTextField();
-        btnVerPaquetes = new javax.swing.JButton();
         btnProcesar = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
+        paquetes = new javax.swing.JComboBox<>();
+        puntoControl = new javax.swing.JComboBox<>();
 
         lblNombres.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         lblNombres.setText("****************************");
@@ -57,51 +69,36 @@ public class ProcesarPaquete extends javax.swing.JInternalFrame {
         lblNombre.setText("Nombre del remitente :");
 
         jPanel1.setBackground(new java.awt.Color(141, 234, 179));
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel1MouseClicked(evt);
+            }
+        });
 
-        lblTitulo.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
+        lblTitulo.setFont(new java.awt.Font("Dialog", 1, 40)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(30, 65, 32));
         lblTitulo.setText("PROCESAR PAQUETE");
 
         lblNoGuia.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         lblNoGuia.setForeground(new java.awt.Color(30, 65, 32));
-        lblNoGuia.setText("Ingrese No. Guia:");
-
-        txtNoGuia.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
-        txtNoGuia.setForeground(new java.awt.Color(13, 58, 12));
-        txtNoGuia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNoGuiaActionPerformed(evt);
-            }
-        });
-        txtNoGuia.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtNoGuiaKeyTyped(evt);
-            }
-        });
+        lblNoGuia.setText(" No. Guia:");
 
         panelInfoPaquete.setBackground(new java.awt.Color(214, 251, 230));
         panelInfoPaquete.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 201, 178), 2, true));
 
-        remitenteTxt.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        remitenteTxt.setText("****************************");
+        txtNombre.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        txtNombre.setText("****************************");
 
         lblRemitente.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         lblRemitente.setForeground(new java.awt.Color(30, 65, 32));
         lblRemitente.setText("remitente :");
 
-        nombresTxt.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        nombresTxt.setText("****************************");
+        txtDestino.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        txtDestino.setText("****************************");
 
         lblDestino.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         lblDestino.setForeground(new java.awt.Color(30, 65, 32));
         lblDestino.setText("Destino :");
-
-        lblNombre3.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        lblNombre3.setForeground(new java.awt.Color(30, 65, 32));
-        lblNombre3.setText("Fecha de ingreso:");
-
-        fechaTxt.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        fechaTxt.setText("****************************");
 
         javax.swing.GroupLayout panelInfoPaqueteLayout = new javax.swing.GroupLayout(panelInfoPaquete);
         panelInfoPaquete.setLayout(panelInfoPaqueteLayout);
@@ -110,32 +107,26 @@ public class ProcesarPaquete extends javax.swing.JInternalFrame {
             .addGroup(panelInfoPaqueteLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelInfoPaqueteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblNombre3)
                     .addComponent(lblDestino)
                     .addComponent(lblRemitente))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(100, 100, 100)
                 .addGroup(panelInfoPaqueteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(remitenteTxt)
-                    .addComponent(nombresTxt)
-                    .addComponent(fechaTxt))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txtNombre)
+                    .addComponent(txtDestino))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
         panelInfoPaqueteLayout.setVerticalGroup(
             panelInfoPaqueteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelInfoPaqueteLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelInfoPaqueteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(remitenteTxt)
+                    .addComponent(txtNombre)
                     .addComponent(lblRemitente))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                 .addGroup(panelInfoPaqueteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nombresTxt)
-                    .addComponent(lblDestino))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                .addGroup(panelInfoPaqueteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fechaTxt)
-                    .addComponent(lblNombre3))
-                .addContainerGap())
+                    .addComponent(lblDestino)
+                    .addComponent(txtDestino))
+                .addGap(29, 29, 29))
         );
 
         lblNoHoras.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
@@ -155,14 +146,6 @@ public class ProcesarPaquete extends javax.swing.JInternalFrame {
             }
         });
 
-        btnVerPaquetes.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        btnVerPaquetes.setText("Ver Paquetes");
-        btnVerPaquetes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVerPaquetesActionPerformed(evt);
-            }
-        });
-
         btnProcesar.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         btnProcesar.setText("PROCESAR");
         btnProcesar.addActionListener(new java.awt.event.ActionListener() {
@@ -178,60 +161,79 @@ public class ProcesarPaquete extends javax.swing.JInternalFrame {
             }
         });
 
+        paquetes.setFont(new java.awt.Font("Dialog", 0, 22)); // NOI18N
+        paquetes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "******" }));
+        paquetes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                paquetesMouseClicked(evt);
+            }
+        });
+        paquetes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                paquetesActionPerformed(evt);
+            }
+        });
+
+        puntoControl.setFont(new java.awt.Font("Dialog", 0, 22)); // NOI18N
+        puntoControl.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "******" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelInfoPaquete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(lblNoHoras)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtNoHoras, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(lblNoGuia)
-                                .addGap(56, 56, 56)
-                                .addComponent(txtNoGuia, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(36, 36, 36)
-                                .addComponent(btnBuscar)))
-                        .addGap(0, 72, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnProcesar, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(panelInfoPaquete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(9, 9, 9)
+                            .addComponent(lblNoHoras)
+                            .addGap(40, 40, 40)
+                            .addComponent(txtNoHoras, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(30, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(81, 81, 81)
-                .addComponent(lblTitulo)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnVerPaquetes, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnProcesar, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblTitulo)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(lblNoGuia)
+                        .addGap(75, 75, 75)
+                        .addComponent(paquetes, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(puntoControl, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(21, 21, 21))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblTitulo)
-                .addGap(27, 27, 27)
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblTitulo)
+                        .addGap(28, 28, 28))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(puntoControl, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNoGuia)
-                    .addComponent(txtNoGuia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscar))
-                .addGap(18, 18, 18)
+                    .addComponent(paquetes, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(31, 31, 31)
                 .addComponent(panelInfoPaquete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNoHoras)
                     .addComponent(txtNoHoras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnProcesar, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnVerPaquetes, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(62, 62, 62))
+                .addGap(18, 18, 18)
+                .addComponent(btnProcesar, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(54, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -248,17 +250,6 @@ public class ProcesarPaquete extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtNoGuiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNoGuiaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNoGuiaActionPerformed
-
-    private void txtNoGuiaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNoGuiaKeyTyped
-        char f = evt.getKeyChar();
-        if(f<'0'||f>'9') evt.consume();
-
-        if(txtNoGuia.getText().length()==12) evt.consume();
-    }//GEN-LAST:event_txtNoGuiaKeyTyped
-
     private void txtNoHorasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNoHorasActionPerformed
 
     }//GEN-LAST:event_txtNoHorasActionPerformed
@@ -268,19 +259,41 @@ public class ProcesarPaquete extends javax.swing.JInternalFrame {
         if(f<'0'||f>'9') evt.consume();
     }//GEN-LAST:event_txtNoHorasKeyTyped
 
-    private void btnVerPaquetesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerPaquetesActionPerformed
-        
-    }//GEN-LAST:event_btnVerPaquetesActionPerformed
-
     private void btnProcesarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcesarActionPerformed
-        validarNumeroGuia();
+        if(txtNoHoras.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null,"NO HA ESPECIFICADO EL NUMRO DE HORAS");
+        }else{
+            paquete.ingresarHoras(IngresarUsuario.conector, paquetes.getSelectedItem().toString(),Integer.valueOf(txtNoHoras.getText()));
+            JOptionPane.showMessageDialog(null,"EL PAQUETE HA SIDO PROCESADO");
+            vaciarCampos();
+        }
     }//GEN-LAST:event_btnProcesarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        int idFactura = paquete.obtenerFactura(IngresarUsuario.conector, paquetes.getSelectedItem().toString());
         panelInfoPaquete.setVisible(true);
         vaciarCampos();
-        
+        int miDestino =paquete.obtenerDestino(IngresarUsuario.conector, paquetes.getSelectedItem().toString());
+        txtDestino.setText(destino.obtenerNombre(IngresarUsuario.conector, miDestino));
+        txtNombre.setText(factura.obtenerRemitente(IngresarUsuario.conector, idFactura));
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
+       if(validador==1){
+            cui = usuario.obtenerCui(IngresarUsuario.conector);
+            System.out.println(cui);
+            puntosControl.obtenerPuntoDeOperador(IngresarUsuario.conector, cui, puntoControl);
+            validador=2;
+       }
+    }//GEN-LAST:event_jPanel1MouseClicked
+
+    private void paquetesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paquetesActionPerformed
+        
+    }//GEN-LAST:event_paquetesActionPerformed
+
+    private void paquetesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_paquetesMouseClicked
+        paquete.obtenerPaquetesDelPunto(IngresarUsuario.conector, puntoControl.getSelectedItem().toString(), paquetes);
+    }//GEN-LAST:event_paquetesMouseClicked
 
     private void Diseño(){
         panelInfoPaquete.setVisible(false);
@@ -291,45 +304,29 @@ public class ProcesarPaquete extends javax.swing.JInternalFrame {
     }
     
     private void vaciarCampos(){
-        fechaTxt.setText("**************************************");
-        nombresTxt.setText("**************************************");
-        remitenteTxt.setText("**************************************");
-        txtNoGuia.setText(" ");
-        txtNoHoras.setText(" ");
+        txtDestino.setText("**************************************");
+        txtNombre.setText("**************************************");
+        txtNoHoras.setText("");
     }
     
-    private void validarNumeroGuia(){
-        if(txtNoGuia.getText().length()!=12){
-            JOptionPane.showMessageDialog(null,"El Numero de Guia requiere 12 digitos");
-        }else if(txtNoGuia.getText().length()==12){
-            if(txtNoHoras.getText().isEmpty()){
-                JOptionPane.showMessageDialog(null,"No ha especificado las horas");
-            }else{
-                JOptionPane.showMessageDialog(null,"El paquete se ha procesado con exito");
-                this.setVisible(false);
-            }
-            
-        }
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnProcesar;
-    private javax.swing.JButton btnVerPaquetes;
-    private javax.swing.JLabel fechaTxt;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblDestino;
     private javax.swing.JLabel lblNoGuia;
     private javax.swing.JLabel lblNoHoras;
     private javax.swing.JLabel lblNombre;
-    private javax.swing.JLabel lblNombre3;
     private javax.swing.JLabel lblNombres;
     private javax.swing.JLabel lblRemitente;
     private javax.swing.JLabel lblTitulo;
-    private javax.swing.JLabel nombresTxt;
     private javax.swing.JPanel panelInfoPaquete;
-    private javax.swing.JLabel remitenteTxt;
-    private javax.swing.JTextField txtNoGuia;
+    private javax.swing.JComboBox<String> paquetes;
+    private javax.swing.JComboBox<String> puntoControl;
+    private javax.swing.JLabel txtDestino;
     private javax.swing.JTextField txtNoHoras;
+    private javax.swing.JLabel txtNombre;
     // End of variables declaration//GEN-END:variables
 }

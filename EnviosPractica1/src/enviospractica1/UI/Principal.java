@@ -8,9 +8,6 @@ package enviospractica1.UI;
 import enviospractica1.UI.Administrador.AdministradorInterface;
 import enviospractica1.UI.operador.OperadorInterface;
 import enviospractica1.UI.recepcionista.RecepcionistaInterface;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -148,16 +145,16 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnRecepcionistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecepcionistaActionPerformed
         acceder.setVisible(true);
-        int reconocedor;
-        reconocedor = acceder.reconocerUsuario();
-        if(!acceder.isVisible()){
+       
             if(acceder.reconocerUsuario()==3){
                 recepcionistaInterface.setVisible(true);
                 jDesktopUsuarios.add(recepcionistaInterface);
             }else if(acceder.reconocerUsuario()!=3){
                 JOptionPane.showMessageDialog(null,"El usuario no tiene permitido el acceso a Recepcionista");
+            }else if(acceder.reconocerUsuario()==0){
+                
             }
-        }
+        
         
     }//GEN-LAST:event_btnRecepcionistaActionPerformed
 
@@ -169,8 +166,8 @@ public class Principal extends javax.swing.JFrame {
             if(reconocedor==2){
                 operadorInterface.setVisible(true);
                 jDesktopUsuarios.add(operadorInterface);
-            }else if(acceder.reconocerUsuario()!=2){
-                JOptionPane.showMessageDialog(null,"El usuario no tiene permitido el acceso a Recepcionista");
+            }else if(acceder.reconocerUsuario()!=2 ){
+                JOptionPane.showMessageDialog(null,"El usuario no tiene permitido el acceso a Operador");
             }
         }
        

@@ -6,13 +6,10 @@
 package enviospractica1.UI.Administrador;
 
 import enviospractica1.Backend.PuntoControl;
+import enviospractica1.Backend.Ruta;
 import enviospractica1.Backend.Usuario;
 import enviospractica1.ConectorMySQL;
 import enviospractica1.UI.IngresarUsuario;
-import java.awt.HeadlessException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import javax.swing.JOptionPane;
 
 /**
@@ -23,6 +20,7 @@ public class NuevoUsuario extends javax.swing.JInternalFrame {
 
     IngresarUsuario usuario = new IngresarUsuario();
     PuntoControl puntoDeCOntrol = new PuntoControl();
+    Ruta ruta = new Ruta();
     Usuario nuevoUsuario = new Usuario();
     private String nombre;
     /**
@@ -61,7 +59,7 @@ public class NuevoUsuario extends javax.swing.JInternalFrame {
         btnGuardar = new javax.swing.JButton();
         lblCelular3 = new javax.swing.JLabel();
         panelAsignar = new javax.swing.JPanel();
-        Rutas = new javax.swing.JComboBox<>();
+        puntosControl = new javax.swing.JComboBox<>();
         lblCelular4 = new javax.swing.JLabel();
         lblCelular1 = new javax.swing.JLabel();
         txtAdvertencia = new javax.swing.JLabel();
@@ -191,16 +189,16 @@ public class NuevoUsuario extends javax.swing.JInternalFrame {
 
         panelAsignar.setBackground(new java.awt.Color(141, 234, 179));
 
-        Rutas.setFont(new java.awt.Font("Dialog", 0, 22)); // NOI18N
-        Rutas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "******" }));
-        Rutas.addMouseListener(new java.awt.event.MouseAdapter() {
+        puntosControl.setFont(new java.awt.Font("Dialog", 0, 22)); // NOI18N
+        puntosControl.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "******" }));
+        puntosControl.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                RutasMousePressed(evt);
+                puntosControlMousePressed(evt);
             }
         });
-        Rutas.addActionListener(new java.awt.event.ActionListener() {
+        puntosControl.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RutasActionPerformed(evt);
+                puntosControlActionPerformed(evt);
             }
         });
 
@@ -216,7 +214,7 @@ public class NuevoUsuario extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panelAsignarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblCelular4)
-                    .addComponent(Rutas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(puntosControl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         panelAsignarLayout.setVerticalGroup(
@@ -225,7 +223,7 @@ public class NuevoUsuario extends javax.swing.JInternalFrame {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(lblCelular4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Rutas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(puntosControl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -412,17 +410,17 @@ public class NuevoUsuario extends javax.swing.JInternalFrame {
             evt.consume();}
     }//GEN-LAST:event_txtApellidoKeyTyped
 
-    private void RutasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RutasActionPerformed
-
-    }//GEN-LAST:event_RutasActionPerformed
+    private void puntosControlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_puntosControlActionPerformed
+        
+    }//GEN-LAST:event_puntosControlActionPerformed
 
     private void rangosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rangosActionPerformed
         verRango();
     }//GEN-LAST:event_rangosActionPerformed
 
-    private void RutasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RutasMousePressed
-        puntoDeCOntrol.ListarRutas(IngresarUsuario.conector, Rutas);
-    }//GEN-LAST:event_RutasMousePressed
+    private void puntosControlMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_puntosControlMousePressed
+        puntoDeCOntrol.ListarPuntos(IngresarUsuario.conector, puntosControl);
+    }//GEN-LAST:event_puntosControlMousePressed
 
     private int validador;
     
@@ -455,6 +453,7 @@ public class NuevoUsuario extends javax.swing.JInternalFrame {
                             if(validador==2){
                                 validador = nuevoUsuario.CrearUsuario(IngresarUsuario.conector);
                                 if(validador == 2){
+                                    agregarOperador();
                                     VaciarCampos();
                                     this.setVisible(false);
                                 }
@@ -473,6 +472,13 @@ public class NuevoUsuario extends javax.swing.JInternalFrame {
         }else {
             validador=2;
         }
+    }
+    
+    public void agregarOperador(){
+        if(rangos.getSelectedIndex()==2){
+            puntoDeCOntrol.AsignarOperador(IngresarUsuario.conector, txtCUI.getText(), puntosControl.getSelectedItem().toString());
+        }
+        
     }
     
     public void validarCUI(){
@@ -563,7 +569,6 @@ public class NuevoUsuario extends javax.swing.JInternalFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel LblTitulo;
-    private javax.swing.JComboBox<String> Rutas;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JPasswordField contraseña;
     private javax.swing.JPasswordField contraseña1;
@@ -578,6 +583,7 @@ public class NuevoUsuario extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblContraseña;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JPanel panelAsignar;
+    private javax.swing.JComboBox<String> puntosControl;
     private javax.swing.JComboBox<String> rangos;
     private javax.swing.JLabel txtAdvertencia;
     private javax.swing.JTextField txtApellido;

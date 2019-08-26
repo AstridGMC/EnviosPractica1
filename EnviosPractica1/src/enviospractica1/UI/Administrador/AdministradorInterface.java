@@ -300,8 +300,6 @@ public class AdministradorInterface extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnMisUsuariosActionPerformed
 
     public void AsignarCodigoRuta(ConectorMySQL conector){
-        
-        
         try{
             Statement instruccionSQL = conector.getConexion().createStatement();
             instruccionSQL.executeQuery("USE enviosPractica");
@@ -314,15 +312,17 @@ public class AdministradorInterface extends javax.swing.JInternalFrame {
             System.out.println("ha fallado la conexion en asignar codigo Ruta"  );
         }
     }
-    
+    int sumar =10;
     public void AsignarCodigoPunto(ConectorMySQL conector){
+        
         try{
             Statement instruccionSQL = conector.getConexion().createStatement();
             instruccionSQL.executeQuery("USE enviosPractica");
             ResultSet obtenerUltimoPunto = instruccionSQL.executeQuery("SELECT MAX(codPuntoDeControl) FROM PuntoDeControl;");
             System.out.println(obtenerUltimoPunto.first());
             codigoPunto= obtenerUltimoPunto.getString("MAX(codPuntoDeControl)");
-            numero = Integer.parseInt(String.valueOf(codigoPunto.charAt(1)))+1;
+            numero = Integer.parseInt(String.valueOf(codigoPunto.charAt(1)))+sumar;
+            sumar++;
             System.out.println(numero);
         } catch ( SQLException e){
             System.out.println("ha fallado la conexion en crear usuario Punto" );

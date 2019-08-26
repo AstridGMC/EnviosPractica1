@@ -5,14 +5,8 @@
  */
 package enviospractica1.UI.recepcionista;
 
-import com.mysql.jdbc.Connection;
 import enviospractica1.ConectorMySQL;
-import java.awt.HeadlessException;
-import java.io.IOException;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
+import enviospractica1.UI.VerClientes;
 
 /**
  *
@@ -24,8 +18,8 @@ public class RecepcionistaInterface extends javax.swing.JInternalFrame {
     private String usuario ;
     private String password;
     
-    RegistroCliente registrarCliente = new RegistroCliente();
-    RegistroEnvio nuevoEnvio= new RegistroEnvio();
+    
+    
     /**
      * Creates new form RecepcionoistaInterface
      */
@@ -78,11 +72,11 @@ public class RecepcionistaInterface extends javax.swing.JInternalFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, 759, Short.MAX_VALUE)
+            .addComponent(jDesktopUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, 752, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, 556, Short.MAX_VALUE)
+            .addComponent(jDesktopUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)
         );
 
         barraMenu.setBackground(new java.awt.Color(1, 1, 1));
@@ -107,6 +101,11 @@ public class RecepcionistaInterface extends javax.swing.JInternalFrame {
         jMenuItem3.setForeground(new java.awt.Color(254, 254, 254));
         jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/enviospractica1/UI/Imagenes/clientes.png"))); // NOI18N
         jMenuItem3.setText("Ver Clientes");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem3);
 
         barraMenu.add(jMenu1);
@@ -161,75 +160,37 @@ public class RecepcionistaInterface extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnRastrearActionPerformed
 
     private void btnAgregarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarClienteActionPerformed
+        RegistroCliente registrarCliente = new RegistroCliente();
         registrarCliente.setVisible(true);
         jDesktopUsuarios.add(registrarCliente);
     }//GEN-LAST:event_btnAgregarClienteActionPerformed
 
     private void btnRegistrarEnvioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarEnvioActionPerformed
+        RegistroEnvio nuevoEnvio= new RegistroEnvio();
         nuevoEnvio.setVisible(true);
         jDesktopUsuarios.add(nuevoEnvio);
+        nuevoEnvio.toFront();
     }//GEN-LAST:event_btnRegistrarEnvioActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        VerClientes clientes = new VerClientes();
+        clientes.setVisible(true);
+        jDesktopUsuarios.add(clientes);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
       public void obtenerDatos(String usuario, String password){
           this.usuario = usuario;
           this.password = password;
         conector = new ConectorMySQL(usuario,password ); 
     }
+      
     ConectorMySQL conector; 
     
       
-     public  boolean ValidarUsuario( Connection conexion )  throws IOException {
-        try{
-            
-            Statement instruccionSQL2 = conexion.createStatement();
-            ResultSet resultadosConsulta = instruccionSQL2.executeQuery ("SELECT * FROM Usuario WHERE nombreUsuario ='"+usuario+"' AND passwordUser='"+password+"'");
- 
-            if( resultadosConsulta.first()){   
-                System.out.println("correcto");
-                return true;        //usuario validado correctamente
-            }else  if(!resultadosConsulta.first()){
-                System.out.println("incorrecto" + usuario + password);
-                
-                return false;        //usuario validado incorrectamente
-            }else{
-                return false;
-            }
-        } catch (Exception e){
-            System.out.println("ddddddddddd incorrecto" + usuario + password);
-            e.printStackTrace();
-            return false;
-        }
- 
-    }
-
-    public int reconocerUsuario() throws IOException{
-        int validacionRango = conector.ValidarRango( conector.getConexion());
-        if(conector != null){
-            if(validacionRango==1){
-                System.out.println(1);
-                return 1;
-            } else if (validacionRango==2){
-                System.out.println(2);
-                return 2;
-            } else if(validacionRango==3){
-                System.out.println(3);
-                return 3;
-            }else{
-                System.out.println("nada encontrado");
-                return 0;
-            }
-        }else{
-                System.out.println("no encontrado");
-                return 0;
-            }
-    }
-    
-    
     public void Diseño(){
-        this.setClosable(true);
         this.setResizable(true);
         this.setIconifiable(true);
-        this.setTitle("Recepcionista");
+        this.setTitle("RECEPCIONISTA");
         
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -237,7 +198,7 @@ public class RecepcionistaInterface extends javax.swing.JInternalFrame {
     private javax.swing.JMenuItem btnAgregarCliente;
     private javax.swing.JMenuItem btnRastrear;
     private javax.swing.JMenuItem btnRegistrarEnvio;
-    private javax.swing.JDesktopPane jDesktopUsuarios;
+    public static javax.swing.JDesktopPane jDesktopUsuarios;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;

@@ -3,15 +3,8 @@ package enviospractica1.UI.Administrador;
 
 import enviospractica1.Backend.Destino;
 import enviospractica1.Backend.Ruta;
-import enviospractica1.ConectorMySQL;
-import java.awt.HeadlessException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import javax.swing.JOptionPane;
 import enviospractica1.UI.IngresarUsuario;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
     /**
      *
@@ -114,19 +107,19 @@ public class NuevaRuta extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(106, 106, 106)
-                        .addComponent(LblTitulo))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(23, 23, 23)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(lblCodRuta)
-                                .addGap(18, 18, 18)
+                                .addGap(61, 61, 61)
                                 .addComponent(txtCodRuta))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(lblDestino)
-                                .addGap(193, 193, 193)
-                                .addComponent(destino, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGap(102, 102, 102)
+                                .addComponent(destino, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(106, 106, 106)
+                        .addComponent(LblTitulo)))
                 .addContainerGap(127, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -141,10 +134,10 @@ public class NuevaRuta extends javax.swing.JInternalFrame {
                     .addComponent(txtCodRuta)
                     .addComponent(lblCodRuta))
                 .addGap(71, 71, 71)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDestino)
                     .addComponent(destino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
                 .addComponent(btnGuardar1)
                 .addGap(58, 58, 58))
         );
@@ -164,7 +157,7 @@ public class NuevaRuta extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardar1ActionPerformed
-        if(ruta.GuardarRutal(IngresarUsuario.conector, destino, numeroCodRuta)){
+        if(ruta.GuardarRuta(IngresarUsuario.conector, destino, numeroCodRuta)){
             JOptionPane.showMessageDialog(null,"La Ruta se Ha creado con exito");
             this.setVisible(false);
         }else{
@@ -188,7 +181,7 @@ public class NuevaRuta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_verRutasActionPerformed
  
     
-     private void Diseño( int codigoRuta){
+    private void Diseño( int codigoRuta){
          System.out.println(codigoRuta);
         this.setClosable(true);
         this.setResizable(true);

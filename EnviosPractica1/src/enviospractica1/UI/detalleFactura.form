@@ -159,7 +159,7 @@
                           <Group type="102" attributes="0">
                               <Component id="jLabel3" min="-2" pref="98" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
-                              <Component id="jLabel8" min="-2" pref="390" max="-2" attributes="0"/>
+                              <Component id="txtNombre" min="-2" pref="390" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
@@ -192,7 +192,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel3" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="jLabel8" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="txtNombre" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -252,7 +252,7 @@
                 <Property name="text" type="java.lang.String" value="No. DPI:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel8">
+            <Component class="javax.swing.JLabel" name="txtNombre">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Dialog" size="18" style="0"/>
@@ -305,7 +305,7 @@
                       <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                       <Component id="lblTotal2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="lblDatos4" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtTotal" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="lblDatos3" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -319,7 +319,7 @@
                       <Component id="jScrollPane1" min="-2" pref="117" max="-2" attributes="0"/>
                       <EmptySpace pref="163" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblDatos4" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtTotal" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblDatos3" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblTotal2" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblDatos5" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -354,7 +354,7 @@
                           <Editor/>
                           <Renderer/>
                         </Column>
-                        <Column maxWidth="105" minWidth="105" prefWidth="-1" resizable="true">
+                        <Column maxWidth="150" minWidth="150" prefWidth="-1" resizable="true">
                           <Title/>
                           <Editor/>
                           <Renderer/>
@@ -398,7 +398,7 @@
                 <Property name="text" type="java.lang.String" value=".00"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblDatos4">
+            <Component class="javax.swing.JLabel" name="txtTotal">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Dialog" size="24" style="1"/>

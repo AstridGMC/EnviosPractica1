@@ -15,6 +15,7 @@ public class Usuario {
     private String rango;
     private String CUI;
     public int celular;
+    public String nit;
 
     public String getNombreUsuario() {
         return nombreUsuario;
@@ -107,6 +108,61 @@ public class Usuario {
             
         } catch (SQLException e) {
             System.out.println(" incorrecto no existe en base de datos");
+        }
+    }
+    
+    public String obtenerCui(ConectorMySQL conector){
+         try {
+           Statement instruccionSQL3 = conector.getConexion().createStatement();
+            ResultSet rs= instruccionSQL3.executeQuery(" SELECT cuiOperador FROM enviosPractica.Usuario WHERE nombreUsuario ='"+obtenerUsuario(conector)+"';");
+            rs.first();
+            return rs.getString("cuiOperador");
+            
+        } catch (SQLException e) {
+            System.out.println(" incorrecto no existe usuario en base de datos");
+            return null;
+        }
+    }
+    
+    public String obtenerCuiNombre(ConectorMySQL conector, String nombre){
+         try {
+           Statement instruccionSQL3 = conector.getConexion().createStatement();
+            ResultSet rs= instruccionSQL3.executeQuery(" SELECT cuiOperador FROM enviosPractica.Usuario WHERE nombreUsuario ='"+nombre+"';");
+            rs.first();
+            return rs.getString("cuiOperador");
+            
+        } catch (SQLException e) {
+            System.out.println(" incorrecto no existe usuario en base de datos");
+            return null;
+        }
+    }
+    public String obtenerUsuario(ConectorMySQL conector){
+        try {
+           Statement instruccionSQL3 = conector.getConexion().createStatement();
+            ResultSet rs= instruccionSQL3.executeQuery("SELECT LEFT(CURRENT_USER(), INSTR(CURRENT_USER(), '@') - 1);");
+            rs.first();
+            System.out.println(rs.getString("LEFT(CURRENT_USER(), INSTR(CURRENT_USER(), '@') - 1)"));
+            return rs.getString("LEFT(CURRENT_USER(), INSTR(CURRENT_USER(), '@') - 1)");
+            
+        } catch (SQLException e) {
+            System.out.println(" incorrecto no existe el usuario en base de datos");
+            return null;
+        }
+    }
+    
+    public void ListarOperadores( ConectorMySQL conector , javax.swing.JComboBox<String> operadores){
+        try{
+            Statement instruccionSQL4 = conector.getConexion().createStatement();
+            instruccionSQL4.executeQuery("USE enviosPractica");
+            ResultSet obtenerOperador= instruccionSQL4.executeQuery("SELECT nombreUsuario FROM Usuario WHERE rango = 'operador';");
+            obtenerOperador.first();
+            operadores.removeAllItems();
+            operadores.addItem(obtenerOperador.getString("nombreUsuario"));
+            while(obtenerOperador.next()){
+                 operadores.addItem(obtenerOperador.getString("nombreUsuario"));
+            }
+        } catch (HeadlessException | SQLException e){
+            System.out.println("ha fallado la conexion al leer operadores" );
         }
     }
 }

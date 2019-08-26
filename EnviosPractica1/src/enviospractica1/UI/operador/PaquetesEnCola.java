@@ -5,6 +5,11 @@
  */
 package enviospractica1.UI.operador;
 
+import enviospractica1.Backend.Paquete;
+import enviospractica1.Backend.PuntoControl;
+import enviospractica1.Backend.Usuario;
+import enviospractica1.UI.IngresarUsuario;
+
 /**
  *
  * @author astridmc
@@ -14,9 +19,15 @@ public class PaquetesEnCola extends javax.swing.JDialog {
     /**
      * Creates new form PaquetesEnCola
      */
+    Usuario usuario = new Usuario();
+    PuntoControl puntosControl = new PuntoControl();
+    Paquete paquete = new Paquete();
+    private String cui;
+    private int validador =1;
     public PaquetesEnCola(java.awt.Frame parent) {
         super(parent, true);
         initComponents();
+        validador =1;
     }
 
     /**
@@ -30,15 +41,17 @@ public class PaquetesEnCola extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaPaquetes = new javax.swing.JTable();
         txtFactura = new javax.swing.JLabel();
+        puntoControl = new javax.swing.JComboBox<>();
+        lblNoGuia = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(219, 253, 235));
 
-        jTable1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaPaquetes.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        tablaPaquetes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -57,41 +70,63 @@ public class PaquetesEnCola extends javax.swing.JDialog {
                 return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablaPaquetes);
 
         txtFactura.setFont(new java.awt.Font("Century Schoolbook L", 1, 48)); // NOI18N
         txtFactura.setForeground(new java.awt.Color(33, 46, 57));
         txtFactura.setText("PAQUETES EN COLA");
 
+        puntoControl.setFont(new java.awt.Font("Dialog", 0, 22)); // NOI18N
+        puntoControl.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "******" }));
+        puntoControl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                puntoControlMouseClicked(evt);
+            }
+        });
+
+        lblNoGuia.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        lblNoGuia.setForeground(new java.awt.Color(30, 65, 32));
+        lblNoGuia.setText("Escoja punto de Control:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblNoGuia)
+                .addGap(82, 82, 82)
+                .addComponent(puntoControl, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(168, 168, 168))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(47, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 576, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(79, 79, 79))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 653, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(41, 41, 41))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addComponent(txtFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 576, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 653, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(43, 43, 43)
+                .addGap(21, 21, 21)
                 .addComponent(txtFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(puntoControl, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNoGuia))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(73, Short.MAX_VALUE))
+                .addGap(28, 28, 28))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 683, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -101,11 +136,23 @@ public class PaquetesEnCola extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void puntoControlMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_puntoControlMouseClicked
+        if(validador==1){
+            cui = usuario.obtenerCui(IngresarUsuario.conector);
+            System.out.println(cui);
+            puntosControl.obtenerPuntoDeOperador(IngresarUsuario.conector, cui, puntoControl);
+            validador=2;
+            paquete.ListarPaquetesDelPunto(IngresarUsuario.conector, puntoControl.getSelectedItem().toString(), tablaPaquetes);
+       }
+    }//GEN-LAST:event_puntoControlMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lblNoGuia;
+    private javax.swing.JComboBox<String> puntoControl;
+    private javax.swing.JTable tablaPaquetes;
     private javax.swing.JLabel txtFactura;
     // End of variables declaration//GEN-END:variables
 }

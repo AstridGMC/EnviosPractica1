@@ -79,32 +79,16 @@ public class PuntoControl {
             System.out.println("ha fallado la conexion al leer rutas" );
             e.printStackTrace();
         }
-        
     }
-    public void ListarRutas(ConectorMySQL conector,javax.swing.JComboBox<String> rutas ){
-        try{
-            Statement instruccionSQL4 = conector.getConexion().createStatement();
-            instruccionSQL4.executeQuery("USE enviosPractica");
-            ResultSet obtenerRuta= instruccionSQL4.executeQuery("SELECT codigoRuta FROM Ruta");
-            System.out.println(obtenerRuta.first()+ "POOOL");
-            rutas.removeAllItems();
-            rutas.addItem(obtenerRuta.getString(1));
-            while(obtenerRuta.next()){
-                 rutas.addItem(obtenerRuta.getString("codigoRuta"));
-            }
-        } catch (HeadlessException | SQLException e){
-            System.out.println("ha fallado la conexion al leer rutas" );
-            e.printStackTrace();
-        }
-    }
-    public boolean GuardarPuntoPrecioIndividual(ConectorMySQL conector, String codigoPunto, String codRuta, int precioInd){
+    
+    public boolean GuardarPuntoPrecioIndividual(ConectorMySQL conector, String codigoPunto, String codRuta, int precioInd, String CUI){
         obtenerNumero(conector,codRuta);
         precioIndividual =precioInd;
         try{
             Statement instruccionSQL3 = conector.getConexion().createStatement();
             instruccionSQL3.executeQuery("USE enviosPractica");
-            instruccionSQL3.executeUpdate("INSERT INTO PuntoDeControl VALUES ("+precioGlobal+","+precioIndividual+"'"+ codigoPunto+"','"+codRuta+"',"+numero+",'Activo'," +capacidad+");");
-            JOptionPane.showMessageDialog(null,"LA RUTA HA SIDO GUARDADA CON EXITO");
+            instruccionSQL3.executeUpdate("INSERT INTO PuntoDeControl VALUES ("+precioGlobal+","+precioIndividual+",'"+ codigoPunto+"','"+codRuta+"',"+numero+",'Activo'," +capacidad+",'"+CUI+"');");
+            JOptionPane.showMessageDialog(null,"EL PUNTO HA SIDO GUARDADO CON EXITO");
             return true;
         } catch (HeadlessException | SQLException e){
             System.out.println("ha fallado la conexion en Guardar Punto" );
@@ -113,15 +97,15 @@ public class PuntoControl {
         }
     }
   
-    public boolean GuardarPuntoPrecioGlobal(ConectorMySQL conector, String codigoPunto, String codRuta){
+    public boolean GuardarPuntoPrecioGlobal(ConectorMySQL conector, String codigoPunto, String codRuta, String CUI){
         obtenerNumero(conector,codRuta);
         obtenerPrecioGlobal(conector);
         precioIndividual=0;
         try{
             Statement instruccionSQL3 = conector.getConexion().createStatement();
             instruccionSQL3.executeQuery("USE enviosPractica");
-            instruccionSQL3.executeUpdate("INSERT INTO PuntoDeControl VALUES ("+precioGlobal+","+precioIndividual+",'"+ codigoPunto+"','"+codRuta+"',"+numero+",'Activo'," +capacidad+");");
-            JOptionPane.showMessageDialog(null,"LA RUTA HA SIDO GUARDADA CON EXITO");
+            instruccionSQL3.executeUpdate("INSERT INTO PuntoDeControl VALUES ("+precioGlobal+","+precioIndividual+",'"+ codigoPunto+"','"+codRuta+"',"+numero+",'Activo'," +capacidad+",'"+CUI+"');");
+            JOptionPane.showMessageDialog(null,"EL PUNTO HA SIDO GUARDADO CON EXITO");
             return true;
         } catch (HeadlessException | SQLException e){
             System.out.println("ha fallado la conexion en Guardar Punto" );
@@ -146,14 +130,13 @@ public class PuntoControl {
     }
     
      public void obtenerPrecioIndividual(ConectorMySQL conector , javax.swing.JComboBox<String> rutas){
-         try{
+        try{
             codigo= rutas.getSelectedItem().toString();
             Statement instruccionSQL3 = conector.getConexion().createStatement();
             instruccionSQL3.executeQuery("USE enviosPractica");
             ResultSet obtenerPresioGlobal= instruccionSQL3.executeQuery("SELECT precioIndividual FROM PuntoDeControl WHERE codigoPuntoDeControl = '"+codigo+ ";");
-            System.out.println(obtenerPresioGlobal.first());
+            obtenerPresioGlobal.first();
             precioGlobal = obtenerPresioGlobal.getInt("MAX(precioGlobal)");
-            
             
         } catch (HeadlessException | SQLException e){
             System.out.println("ha fallado la conexion en obtener Numero" );
@@ -177,13 +160,12 @@ public class PuntoControl {
             
         } catch (HeadlessException | SQLException e){
             System.out.println("ha fallado la conexion en obtener Numero" );
-            e.printStackTrace();
         }
     }
   
 
     public void CambiarPrecioGlobal(ConectorMySQL conector, javax.swing.JTextField txtNuevoMonto,javax.swing.JComboBox<String> rutas ){
-         try {
+        try {
             precioGlobal = Integer.valueOf(txtNuevoMonto.getText());
             codigo = rutas.getSelectedItem().toString();
             System.out.println(precioGlobal);
@@ -214,10 +196,10 @@ public class PuntoControl {
     public void leerPuntosDeControl(ConectorMySQL conector, javax.swing.JTable tablaReportes){
         try {
             DefaultTableModel reportePuntos = new DefaultTableModel();
-           Statement instruccionSQL3 = conector.getConexion().createStatement();
+            Statement instruccionSQL3 = conector.getConexion().createStatement();
             instruccionSQL3.executeQuery("USE enviosPractica");
             ResultSet rs= instruccionSQL3.executeQuery(" SELECT precioGLobal, precioIndividual, estado , capacidad FROM PuntoDeControl ;");
-            System.out.println(rs.first());
+            rs.first();
             reportePuntos.setColumnIdentifiers(new Object[]{"Precio GLobal" , "Precio Individual", "Estado" , "Capacidad"});
             
             while(rs.next()){
@@ -229,4 +211,51 @@ public class PuntoControl {
             System.out.println(" incorrecto no existe en base de datos");
         }
     }
+    
+    public void AsignarOperador(ConectorMySQL conector, String cuiOperador, String codPuntoControl){
+        try {
+            System.out.println(cuiOperador);
+            Statement instruccionSQL2 = conector.getConexion().createStatement();
+            instruccionSQL2.execute("USE enviosPractica");
+            instruccionSQL2.executeUpdate("UPDATE PuntoDeControl SET cuiOperador = '" + cuiOperador +"' WHERE codPuntoDeCOntrol = '"+codPuntoControl+"';");
+            //JOptionPane.showMessageDialog(null,"Se han registrado los Cambios en Puntod de Control");
+        } catch (SQLException e) {
+            System.out.println(" incorrecto no existe en base de datos");
+        }
+    }
+    
+    public void ListarPuntosDisponibles(ConectorMySQL conector, javax.swing.JComboBox<String> rutas){
+        try{
+            Statement instruccionSQL4 = conector.getConexion().createStatement();
+            instruccionSQL4.executeQuery("USE enviosPractica");
+            ResultSet obtenerRuta= instruccionSQL4.executeQuery("SELECT codPuntoDeControl FROM PuntoDeControl WHERE cuiOperador = '0'");
+            System.out.println(obtenerRuta.first()+ "POOOL");
+            rutas.removeAllItems();
+            rutas.addItem(obtenerRuta.getString(1));
+            while(obtenerRuta.next()){
+                 rutas.addItem(obtenerRuta.getString("codPuntoDeControl"));
+            }
+        } catch (HeadlessException | SQLException e){
+            System.out.println("ha fallado la conexion al leer rutas" );
+            e.printStackTrace();
+        }
+    }
+    
+    public void obtenerPuntoDeOperador(ConectorMySQL conector, String cui, javax.swing.JComboBox<String> puntos ){
+        try{
+            puntos.removeAllItems();
+            Statement instruccionSQL4 = conector.getConexion().createStatement();
+            instruccionSQL4.executeQuery("USE enviosPractica");
+            ResultSet obtenerPunto= instruccionSQL4.executeQuery("SELECT codPuntoDeControl FROM PuntoDeControl WHERE cuiOperador = '"+cui+"';");
+            obtenerPunto.first();
+            puntos.addItem(obtenerPunto.getString("codPuntoDeControl"));
+            while(obtenerPunto.next()){
+                 puntos.addItem(obtenerPunto.getString("codPuntoDeControl"));
+            }
+        } catch (HeadlessException | SQLException e){
+            System.out.println("ha fallado la conexion al leer rutas" );
+            
+        }
+    }
+    
 }

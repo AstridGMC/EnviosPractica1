@@ -16,6 +16,7 @@ public class OperadorInterface extends javax.swing.JInternalFrame {
      */
     public OperadorInterface() {
         initComponents();
+        Diseño();
     }
 
     /**
@@ -106,7 +107,10 @@ public class OperadorInterface extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_btnRegistrarEnvioActionPerformed
 
-
+    private void Diseño(){
+        this.setResizable(true);
+        this.setTitle("OPERADOR");
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar barraMenu;
     private javax.swing.JMenuItem btnRegistrarEnvio;
